@@ -36,7 +36,7 @@ const ArticleComments = (props) => {
                     onToggle={onToggleComments}
                 />
             </ArticleCommentsHeader>
-            {(isOpenComments || ArticleComments.defaultProps.isOpenComments) && <ArticleCommentsBody>
+            {isOpenComments && <ArticleCommentsBody>
                 {comments.map( (row, index) => <ArticleCommentsComment
                     key={index}
                     comment={row.comment}

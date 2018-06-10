@@ -10,10 +10,10 @@ const ArticleDateWrap = styled.i`
 
 const ArticleDate = (props) => {
     const {date} = props;
-
+    console.log(date);
     return (
         <ArticleDateWrap>
-            {moment(date).format('LLLL') || ArticleDate.defaultProps.date}
+            {date !== ArticleDate.defaultProps.date ? moment(date).format('LLLL') : ArticleDate.defaultProps.date}
         </ArticleDateWrap>
     );
 };

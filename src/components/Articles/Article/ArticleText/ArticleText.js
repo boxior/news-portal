@@ -11,7 +11,7 @@ const ArticleText = (props) => {
 
     return (
         <ArticleTextWrap>
-            {text || ArticleText.defaultProps.text}
+            {text}
         </ArticleTextWrap>
     );
 };

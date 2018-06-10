@@ -11,7 +11,7 @@ const HeaderApp = (props) => {
 
     return (
         <HeaderAppWrap>
-            {title || HeaderApp.defaultProps.title}
+            {title}
         </HeaderAppWrap>
     );
 };

@@ -11,7 +11,7 @@ const ArticleTitle = (props) => {
 
     return (
         <ArticleTitleWrap>
-            {title || ArticleTitle.defaultProps.title}
+            {title}
         </ArticleTitleWrap>
     );
 };

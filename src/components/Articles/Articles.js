@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Article from "./Article/Article";
 
-const BodyAppWrap = styled.div`
+const ArticlesWrap = styled.div`
     
 `;
 
@@ -64,7 +64,7 @@ export default class Articles extends Component {
 
     render() {
         return (
-            <BodyAppWrap>
+            <ArticlesWrap>
                 {this.state.articles.map(row =>
                     <Article
                         key={row.id}
@@ -76,7 +76,7 @@ export default class Articles extends Component {
                         isOpenComments={row.isOpenComments}
                     />
                 )}
-            </BodyAppWrap>
+            </ArticlesWrap>
         );
     }
 };

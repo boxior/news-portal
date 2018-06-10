@@ -10,7 +10,7 @@ class App extends Component {
         const articles = [
             {
                 id: uuidv1(),
-                date: "09/18/2015",
+                date: "07/15/2018",
                 title: "Trump retracts his endorsement of G7 final statement",
                 text: "President Trump retracted his endorsement of the final statement from the G7, tweeting afterward he had instructed representatives it. He blamed Canadian Prime Minister Justin Trudeau's statement afterward that Canada will not be and will go through with retaliatory tariffs. ",
                 comments: [

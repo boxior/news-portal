@@ -36,7 +36,7 @@ const Article = (props) => {
                     onToggle={onToggleArticleText}
                 />
             </ArticleHeader>
-            {(isOpenArticle || Article.defaultProps.isOpenArticle) && <ArticleBody>
+            {isOpenArticle && <ArticleBody>
                 <ArticleDate date={article.date}/>
                 <ArticleText text={article.text}/>
                 <ArticleComments
