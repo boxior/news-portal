@@ -27,7 +27,7 @@ export default class Articles extends Component {
         });
     };
 
-    onToggleArticleText = (id) => {
+    onToggleArticle = (id) => {
         let newArticles = this.state.articles.map(row => {
             return id === row.id
                 ?
@@ -70,7 +70,7 @@ export default class Articles extends Component {
                         key={row.id}
                         id={row.id}
                         article={row}
-                        onToggleArticleText={this.onToggleArticleText}
+                        onToggleArticle={this.onToggleArticle}
                         onToggleComments={this.onToggleComments}
                         isOpenArticle={row.isOpenArticle}
                         isOpenComments={row.isOpenComments}

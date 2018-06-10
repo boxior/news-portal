@@ -24,7 +24,7 @@ const ArticleBody = styled.div`
 `;
 
 const Article = (props) => {
-    const {article, isOpenArticle, isOpenComments, onToggleArticleText, onToggleComments, id} = props;
+    const {article, isOpenArticle, isOpenComments, onToggleArticle, onToggleComments, id} = props;
     return (
         <ArticleWrap>
             <ArticleHeader>
@@ -33,7 +33,7 @@ const Article = (props) => {
                     id={id}
                     isOpen={isOpenArticle}
                     blockName={"article"}
-                    onToggle={onToggleArticleText}
+                    onToggle={onToggleArticle}
                 />
             </ArticleHeader>
             {isOpenArticle && <ArticleBody>
