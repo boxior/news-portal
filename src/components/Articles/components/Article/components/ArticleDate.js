@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string} from "prop-types";
 import moment from "moment";
 
 const ArticleDateWrap = styled.i`
@@ -19,7 +19,7 @@ const ArticleDate = (props) => {
 };
 
 ArticleDate.propTypes = {
-    date: PropTypes.string
+    date: string
 };
 
 ArticleDate.defaultProps = {

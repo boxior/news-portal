@@ -1,82 +1,29 @@
-import React, {Component} from "react";
+import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import Article from "./Article/Article";
+import {array} from "prop-types";
+import Article from "./components/Article/Article";
 
 const ArticlesWrap = styled.div`
     
 `;
 
-export default class Articles extends Component {
+const Articles = (props) => {
+    const {articles} = props;
 
-    static propTypes = {
-        articles: PropTypes.array.isRequired
-    };
+    return (
+        <ArticlesWrap>
+            {articles.map(row =>
+                <Article
+                    key={row.id}
+                    article={row}
+                />
+            )}
+        </ArticlesWrap>
+    );
+};
 
-    state = {
-        articles: []
-    };
+export default Articles;
 
-    setArticles = () => {
-        return this.props.articles.map(row => {
-            return {
-                ...row,
-                isOpenArticle: false,
-                isOpenComments: false
-            }
-        });
-    };
-
-    onToggleArticle = (id) => {
-        let newArticles = this.state.articles.map(row => {
-            return id === row.id
-                ?
-                {
-                    ...row,
-                    isOpenArticle: !row.isOpenArticle,
-                    isOpenComments: false
-                }
-                :
-                {
-                    ...row,
-                    isOpenArticle: false
-                }
-        });
-
-        this.setState({
-            articles: newArticles
-        });
-    };
-
-    onToggleComments = (id) => {
-        let newArticles = this.state.articles.map(row => {
-            return id === row.id ? {...row, isOpenComments: !row.isOpenComments} : row
-        });
-
-        this.setState({
-            articles: newArticles
-        });
-    };
-
-    componentDidMount() {
-        this.setState({articles: this.setArticles()});
-    };
-
-    render() {
-        return (
-            <ArticlesWrap>
-                {this.state.articles.map(row =>
-                    <Article
-                        key={row.id}
-                        id={row.id}
-                        article={row}
-                        onToggleArticle={this.onToggleArticle}
-                        onToggleComments={this.onToggleComments}
-                        isOpenArticle={row.isOpenArticle}
-                        isOpenComments={row.isOpenComments}
-                    />
-                )}
-            </ArticlesWrap>
-        );
-    }
+Articles.propTypes = {
+    articles: array.isRequired
 };

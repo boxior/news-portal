@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string, bool, func} from "prop-types";
 
 const ShowHideWrap = styled.button`
     padding: 5px 15px;
@@ -14,23 +14,19 @@ const ShowHideWrap = styled.button`
 `;
 
 const ShowHide = (props) => {
-    const {isOpen, blockName, onToggle, id} = props;
+    const {isOpen, blockName, onToggle} = props;
 
-    const onClick = (id) => (e) => {
-        onToggle(id);
-    };
-
-    const Show = () => <ShowHideWrap onClick={onClick(id)}> {`show ${blockName}`} </ShowHideWrap>;
-    const Hide = () => <ShowHideWrap onClick={onClick(id)}> {`hide ${blockName}`} </ShowHideWrap>;
+    const Show = () => <ShowHideWrap onClick={onToggle}> {`show ${blockName}`} </ShowHideWrap>;
+    const Hide = () => <ShowHideWrap onClick={onToggle}> {`hide ${blockName}`} </ShowHideWrap>;
 
     return isOpen ? <Hide/> : <Show/>;
 };
 
 ShowHide.propTypes = {
-    id: PropTypes.string,
-    isOpen: PropTypes.bool,
-    blockName: PropTypes.string,
-    onToggle: PropTypes.func.isRequired
+    id: string,
+    isOpen: bool,
+    blockName: string,
+    onToggle: func.isRequired
 };
 
 ShowHide.defaultProps = {

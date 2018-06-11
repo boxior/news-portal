@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string} from "prop-types";
 
 const ArticleCommentsTitleWrap = styled.i`
     
@@ -17,7 +17,7 @@ const ArticleCommentsTitle = (props) => {
 };
 
 ArticleCommentsTitle.propTypes = {
-    title: PropTypes.string
+    title: string
 };
 
 ArticleCommentsTitle.defaultProps = {

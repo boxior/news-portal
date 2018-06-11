@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string} from "prop-types";
 
 const ArticleTextWrap = styled.div`
     
@@ -17,7 +17,7 @@ const ArticleText = (props) => {
 };
 
 ArticleText.propTypes = {
-    text: PropTypes.string
+    text: string
 };
 
 ArticleText.defaultProps = {

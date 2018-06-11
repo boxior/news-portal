@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string} from "prop-types";
 
 const ArticleTitleWrap = styled.h2`
     
@@ -17,7 +17,7 @@ const ArticleTitle = (props) => {
 };
 
 ArticleTitle.propTypes = {
-    title: PropTypes.string
+    title: string
 };
 
 ArticleTitle.defaultProps = {

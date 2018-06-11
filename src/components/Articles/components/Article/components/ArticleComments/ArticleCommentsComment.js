@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import {string} from "prop-types";
 
 const ArticleCommentsCommentWrap = styled.p`
     padding-left: 25px;
@@ -18,7 +18,7 @@ const ArticleCommentsComment = (props) => {
 };
 
 ArticleCommentsComment.propTypes = {
-    comment: PropTypes.string
+    comment: string
 };
 
 ArticleCommentsComment.defaultProps = {
