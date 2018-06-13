@@ -1,27 +1,53 @@
 import React from "react";
 import styled from "styled-components";
 import {string} from "prop-types";
+import shave from "shave";
 
-const ArticleTextWrap = styled.div`
+const ArticleTextWrap = styled.span`
     
 `;
 
-const ArticleText = (props) => {
-    const {text} = props;
+class ArticleText extends React.Component {
 
-    return (
-        <ArticleTextWrap>
-            {text}
-        </ArticleTextWrap>
-    );
-};
+    static propTypes = {
+        text: string
+    };
 
-ArticleText.propTypes = {
-    text: string
-};
+    static defaultProps = {
+        text: "...some text"
+    };
 
-ArticleText.defaultProps = {
-    text: "...some text"
+    shaveInit = () => {
+        shave("span", 36, {className: this.text.state.generatedClassName});
+    };
+
+    onResize = () => {
+        this.shaveInit();
+    };
+
+    onResizeInit = () => {
+        window.addEventListener("resize", this.onResize);
+    };
+
+    componentDidMount() {
+        this.shaveInit();
+        this.onResizeInit();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.onResize);
+    };
+
+    render() {
+        const {text} = this.props;
+
+        return (
+            <ArticleTextWrap ref={node => {this.text = node}}>
+                {text}
+            </ArticleTextWrap>
+        );
+    }
+
 };
 
 export default ArticleText;
