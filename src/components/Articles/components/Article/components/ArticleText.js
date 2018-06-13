@@ -64,8 +64,8 @@ class ArticleText extends React.Component {
                 (this.shaveInit(maxHeightAll, this.characterAll),
                     this.onResizeInit(maxHeightAll, this.characterAll))
                 :
-                (this.shaveInit(maxHeightLess),
-                    this.onResizeInit(maxHeightLess))
+                (this.shaveInit(maxHeightLess, this.characterLess),
+                    this.onResizeInit(maxHeightLess, this.characterLess))
         }
 
     };
