@@ -30,37 +30,42 @@ class Article extends Component {
     };
 
     state = {
-        isOpenArticle: false
+        isOpenArticle: false,
+        isShowAll: false
     };
 
     onToggleArticle = () => {
 
-        this.setState( prevState => {
-            return {isOpenArticle: !prevState.isOpenArticle}
+        this.setState(prevState => {
+            return {
+                isOpenArticle: !prevState.isOpenArticle,
+                isShowAll: !prevState.isShowAll}
         });
     };
 
-
     render() {
         const {article} = this.props;
+        const {isOpenArticle, isShowAll} = this.state;
 
         return (
             <ArticleWrap>
                 <ArticleHeader>
                     <ArticleTitle title={article.title}/>
                     <ShowHide
-                        isOpen={this.state.isOpenArticle}
+                        isOpen={isOpenArticle}
                         blockName={"article"}
                         onToggle={this.onToggleArticle}
                     />
                 </ArticleHeader>
-                {this.state.isOpenArticle && <ArticleBody>
+
+                <ArticleBody>
                     <ArticleDate date={article.date}/>
-                    <ArticleText text={article.text}/>
+                    <ArticleText text={article.text} isShowAll={isShowAll}/>
+                    {isOpenArticle &&
                     <ArticleComments
                         comments={article.comments}
-                    />
-                </ArticleBody>}
+                    />}
+                </ArticleBody>
             </ArticleWrap>
         );
     }
