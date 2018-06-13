@@ -28,7 +28,7 @@ class ArticleText extends React.Component {
         this.characterLess = "...";
 
         this.state = {
-            maxHeight: !this.props.isShowAll ? this.maxHeightLess : this.maxHeightAll
+            maxHeight: !props.isShowAll ? this.maxHeightLess : this.maxHeightAll
         };
     }
 
@@ -47,8 +47,11 @@ class ArticleText extends React.Component {
     };
 
     componentDidMount() {
-        this.shaveInit(this.state.maxHeight, this.characterLess);
-        this.onResizeInit(this.state.maxHeight, this.characterLess);
+        const {maxHeight} = this.state;
+        const {characterLess, shaveInit, onResizeInit} = this;
+
+        shaveInit(maxHeight, characterLess);
+        onResizeInit(maxHeight, characterLess);
     }
 
     componentWillUnmount() {
@@ -56,16 +59,17 @@ class ArticleText extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        const {maxHeightAll, maxHeightLess} = this;
+        const {isShowAll} = this.props;
+        const {maxHeightAll, maxHeightLess, characterAll, characterLess, shaveInit, onResizeInit} = this;
 
-        if (this.props.isShowAll !== nextProps.isShowAll) {
+        if (isShowAll !== nextProps.isShowAll) {
             return nextProps.isShowAll
                 ?
-                (this.shaveInit(maxHeightAll, this.characterAll),
-                    this.onResizeInit(maxHeightAll, this.characterAll))
+                (shaveInit(maxHeightAll, characterAll),
+                    onResizeInit(maxHeightAll, characterAll))
                 :
-                (this.shaveInit(maxHeightLess, this.characterLess),
-                    this.onResizeInit(maxHeightLess, this.characterLess))
+                (shaveInit(maxHeightLess, characterLess),
+                    onResizeInit(maxHeightLess, characterLess))
         }
 
     };

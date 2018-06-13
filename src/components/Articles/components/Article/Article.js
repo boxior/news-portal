@@ -26,7 +26,7 @@ const ArticleBody = styled.div`
 class Article extends Component {
 
     static propTypes = {
-        article: object.isRequired,
+        article: object.isRequired
     };
 
     state = {
@@ -60,7 +60,9 @@ class Article extends Component {
 
                 <ArticleBody>
                     <ArticleDate date={article.date}/>
-                    <ArticleText text={article.text} isShowAll={isShowAll}/>
+                    <ArticleText
+                        text={article.text}
+                        isShowAll={isShowAll}/>
                     {isOpenArticle &&
                     <ArticleComments
                         comments={article.comments}
