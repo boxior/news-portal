@@ -34,11 +34,12 @@ class ArticleText extends React.Component {
     };
 
     onResizeInit = () => {
+        const {maxHeightAll, maxHeightLess, characterAll, characterLess} = this;
         this.props.isOpenArticle
             ?
-            this.shaveInit(this.maxHeightAll, this.characterAll)
+            this.shaveInit(maxHeightAll, characterAll)
             :
-            this.shaveInit(this.maxHeightLess, this.characterLess)
+            this.shaveInit(maxHeightLess, characterLess)
     };
 
     componentDidMount() {
