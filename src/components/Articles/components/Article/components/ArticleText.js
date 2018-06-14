@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import {string, bool} from "prop-types";
 import shave from "shave";
+import lineHeight from "line-height";
+import ReactDOM from "react-dom";
 
 const ArticleTextWrap = styled.span`
     
@@ -11,31 +13,24 @@ class ArticleText extends React.Component {
 
     static propTypes = {
         text: string,
-        isShowAll: bool
+        isOpenArticle: bool
     };
 
     static defaultProps = {
         text: "...some text",
-        isShowAll: false,
+        isOpenArticle: false,
     };
 
     constructor(props) {
         super(props);
 
-        this.maxHeightAll = 1;
-        this.maxHeightLess = 36;
         this.characterAll = " ";
         this.characterLess = "...";
-
-        this.state = {
-            maxHeight: !props.isShowAll ? this.maxHeightLess : this.maxHeightAll
-        };
+        this.maxHeightAll = 1; // property to shave module for show all text
     }
 
-
-
     shaveInit = (maxHeight, character) => {
-        shave("span", maxHeight, {className: this.text.state.generatedClassName, character: character});
+        shave(this.element, maxHeight, {character: character});
     };
 
     onResize = (maxHeight, character) => (e) => {
@@ -47,45 +42,48 @@ class ArticleText extends React.Component {
     };
 
     componentDidMount() {
-        const {maxHeight} = this.state;
-        const {characterLess, shaveInit, onResizeInit} = this;
+        this.element = ReactDOM.findDOMNode(this.text); // get node element
+        this.maxHeightLess = lineHeight(this.element) * 2 + 1; // height for 2 lines, add +1 px because do not work for real line-height)
 
-        shaveInit(maxHeight, characterLess);
-        onResizeInit(maxHeight, characterLess);
+        const {maxHeightLess, characterLess, shaveInit, onResizeInit} = this;
+
+        shaveInit(maxHeightLess, characterLess);
+        onResizeInit(maxHeightLess, characterLess);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.onResize);
+        window.removeEventListener("resize", this.onResize());
     };
 
     componentWillReceiveProps(nextProps) {
-        const {isShowAll} = this.props;
-        const {maxHeightAll, maxHeightLess, characterAll, characterLess, shaveInit, onResizeInit} = this;
+        const {isOpenArticle} = this.props;
+        const {maxHeightLess, maxHeightAll, characterAll, characterLess, shaveInit, onResizeInit} = this;
 
-        if (isShowAll !== nextProps.isShowAll) {
-            return nextProps.isShowAll
+        if (isOpenArticle !== nextProps.isOpenArticle) {
+            return nextProps.isOpenArticle
                 ?
-                (shaveInit(maxHeightAll, characterAll),
+                (window.removeEventListener("resize", this.onResize()), // remove before implement
+                    shaveInit(maxHeightAll, characterAll),
                     onResizeInit(maxHeightAll, characterAll))
                 :
-                (shaveInit(maxHeightLess, characterLess),
+                (window.removeEventListener("resize", this.onResize()), // remove before implement
+                    shaveInit(maxHeightLess, characterLess),
                     onResizeInit(maxHeightLess, characterLess))
         }
-
     };
 
     render() {
         const {text} = this.props;
 
         return (
-            <ArticleTextWrap ref={node => {
-                this.text = node
-            }}>
+            <ArticleTextWrap
+                ref={node => {
+                    this.text = node
+                }}>
                 {text}
             </ArticleTextWrap>
-        );
+        )
     }
-
 };
 
 export default ArticleText;

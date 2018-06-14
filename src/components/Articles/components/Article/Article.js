@@ -30,29 +30,26 @@ class Article extends Component {
     };
 
     state = {
-        isOpenArticle: false,
-        isShowAll: false
+        isOpenArticle: false
     };
 
     onToggleArticle = () => {
 
         this.setState(prevState => {
-            return {
-                isOpenArticle: !prevState.isOpenArticle,
-                isShowAll: !prevState.isShowAll}
+            return {isOpenArticle: !prevState.isOpenArticle}
         });
     };
 
     render() {
         const {article} = this.props;
-        const {isOpenArticle, isShowAll} = this.state;
+        const {isOpenArticle} = this.state;
 
         return (
             <ArticleWrap>
                 <ArticleHeader>
                     <ArticleTitle title={article.title}/>
                     <ShowHide
-                        isOpen={isOpenArticle}
+                        isOpenArticle={isOpenArticle}
                         blockName={"article"}
                         onToggle={this.onToggleArticle}
                     />
@@ -62,7 +59,7 @@ class Article extends Component {
                     <ArticleDate date={article.date}/>
                     <ArticleText
                         text={article.text}
-                        isShowAll={isShowAll}/>
+                        isOpenArticle={isOpenArticle}/>
                     {isOpenArticle &&
                     <ArticleComments
                         comments={article.comments}

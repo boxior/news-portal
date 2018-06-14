@@ -23,6 +23,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "gh-pages": "^1.2.0",
+    "line-height": "^0.3.1",
     "moment": "^2.22.2",
     "prop-types": "^15.6.1",
     "shave": "^2.1.3",

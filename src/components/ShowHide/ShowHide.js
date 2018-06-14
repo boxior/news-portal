@@ -14,12 +14,12 @@ const ShowHideWrap = styled.button`
 `;
 
 const ShowHide = (props) => {
-    const {isOpen, blockName, onToggle} = props;
+    const {isOpenArticle, blockName, onToggle} = props;
 
     const Show = () => <ShowHideWrap onClick={onToggle}> {`show ${blockName}`} </ShowHideWrap>;
     const Hide = () => <ShowHideWrap onClick={onToggle}> {`hide ${blockName}`} </ShowHideWrap>;
 
-    return isOpen ? <Hide/> : <Show/>;
+    return isOpenArticle ? <Hide/> : <Show/>;
 };
 
 ShowHide.propTypes = {
