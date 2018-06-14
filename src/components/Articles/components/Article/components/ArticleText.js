@@ -33,12 +33,12 @@ class ArticleText extends React.Component {
         shave(this.element, maxHeight, {character: character});
     };
 
-    onResize = (maxHeight, character) => (e) => {
-        this.shaveInit(maxHeight, character);
-    };
-
-    onResizeInit = (maxHeight, character) => {
-        window.addEventListener("resize", this.onResize(maxHeight, character));
+    onResizeInit = () => {
+        this.props.isOpenArticle
+            ?
+            this.shaveInit(this.maxHeightAll, this.characterAll)
+            :
+            this.shaveInit(this.maxHeightLess, this.characterLess)
     };
 
     componentDidMount() {
@@ -48,11 +48,12 @@ class ArticleText extends React.Component {
         const {maxHeightLess, characterLess, shaveInit, onResizeInit} = this;
 
         shaveInit(maxHeightLess, characterLess);
-        onResizeInit(maxHeightLess, characterLess);
+
+        window.addEventListener("resize", onResizeInit);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.onResize());
+        window.removeEventListener("resize", this.onResizeInit);
     };
 
     componentWillReceiveProps(nextProps) {
@@ -62,13 +63,13 @@ class ArticleText extends React.Component {
         if (isOpenArticle !== nextProps.isOpenArticle) {
             return nextProps.isOpenArticle
                 ?
-                (window.removeEventListener("resize", this.onResize()), // remove before implement
+                (window.removeEventListener("resize", onResizeInit), // remove before implement
                     shaveInit(maxHeightAll, characterAll),
-                    onResizeInit(maxHeightAll, characterAll))
+                    window.addEventListener("resize", onResizeInit))
                 :
-                (window.removeEventListener("resize", this.onResize()), // remove before implement
+                (window.removeEventListener("resize", onResizeInit), // remove before implement
                     shaveInit(maxHeightLess, characterLess),
-                    onResizeInit(maxHeightLess, characterLess))
+                    window.addEventListener("resize", onResizeInit))
         }
     };
 
