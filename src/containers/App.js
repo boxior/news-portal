@@ -3,6 +3,9 @@ import Header from "../components/Header/Header";
 import Articles from "../components/Articles/Articles";
 import articles from "../resourses/articles";
 import ToggleShowContext from "../components/ToggleShowContext/ToggleShowContext"
+import {Provider} from "react-redux"
+import store from "../store/createStore";
+import AddBlock from "../components/AddBlock/AddBlock";
 
 class App extends Component {
 
@@ -11,7 +14,7 @@ class App extends Component {
     };
 
     toggleShowRemoveButtons = () => {
-        this.setState( prev => {
+        this.setState(prev => {
             return {isShowRemoveButtons: !prev.isShowRemoveButtons}
         });
     };
@@ -22,17 +25,18 @@ class App extends Component {
         const {isShowRemoveButtons} = this.state;
 
         return (
-            <ToggleShowContext.Provider
-                value={{
-                    isShowRemoveButtons: isShowRemoveButtons,
-                    toggleShowRemoveButtons: toggleShowRemoveButtons
-                }}
-            >
-                <Header title={title}/>
-                <Articles
-                    articles={articles}
-                />
-            </ToggleShowContext.Provider>
+            <Provider store={store}>
+                <ToggleShowContext.Provider
+                    value={{
+                        isShowRemoveButtons: isShowRemoveButtons,
+                        toggleShowRemoveButtons: toggleShowRemoveButtons
+                    }}
+                >
+                    <Header title={title}/>
+                    <Articles/>
+                    <AddBlock/>
+                </ToggleShowContext.Provider>
+            </Provider>
         )
     }
 }

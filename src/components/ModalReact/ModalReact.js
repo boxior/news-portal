@@ -33,7 +33,7 @@ const Cancel = styled(Accept)`
 
 Modal.setAppElement("#root");
 
-const  ModalReact = (props) => {
+const ModalReact = (props) => {
     const {isOpenModal, closeModal, children, labelModal, removeItem} = props;
 
     return (

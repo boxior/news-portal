@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import {array, func} from "prop-types";
+import {array, func, object, string} from "prop-types";
 import ArticleCommentsTitle from "./ArticleCommentsTitle";
 import ShowHide from "../../../../../ShowHide/ShowHide";
 import ArticleCommentsComment from "./ArticleCommentsComment";
 import Remove from "../../../../../Remove/Remove";
 import ModalReact from "../../../../../ModalReact/ModalReact";
 import ToggleShowContext from "../../../../../ToggleShowContext/ToggleShowContext"
+import {List} from "immutable"
 
 //styled
 
@@ -27,15 +28,16 @@ const ArticleCommentsBody = styled.div`
 class ArticleComments extends Component {
 
     static propTypes = {
-        comments: array,
-        openModal: func
+        comments: object,
+        openModal: func,
+        removeComments: func,
+        id: string,
+        articles: object
     };
 
     state = {
         isOpenComments: false,
         isOpenModal: false,
-        isRemoveItem: false,
-
     };
 
     openModal = () => (e) => {
@@ -49,8 +51,17 @@ class ArticleComments extends Component {
     };
 
     removeItem = () => {
-        this.setState({isRemoveItem: true});
+        const {removeComments, id, articles} = this.props;
 
+        let newArticles = articles.map(row => {
+            if (row.get("id") === id) {
+                return row = row.delete("comments")
+            }
+
+            return row;
+        });
+
+        removeComments(newArticles);
         this.closeModal();
     };
 
@@ -64,23 +75,23 @@ class ArticleComments extends Component {
     render() {
         const {comments, id} = this.props;
         const {closeModal, removeItem, openModal} = this;
-        const {isOpenModal, isRemoveItem} = this.state;
+        const {isOpenModal, isOpenComments} = this.state;
 
-        const title = `Comments (${comments.length})`;
+        const title = `Comments (${List.isList(comments) ? comments.size : 0})`;
         const commentsLabel = "comments";
 
-        return isRemoveItem ? null :
+        return !List.isList(comments) ? null :
             (
                 <ArticleCommentsWrap>
                     <ArticleCommentsHeader>
                         <ArticleCommentsTitle title={title}/>
                         <ShowHide
-                            isOpen={this.state.isOpenComments}
+                            isOpen={isOpenComments}
                             blockName={commentsLabel}
                             onToggle={this.onToggleComments}
                         />
                         <ToggleShowContext.Consumer>
-                            { ({isShowRemoveButtons}) =>
+                            {({isShowRemoveButtons}) =>
                                 <Remove
                                     isShowRemoveButtons={isShowRemoveButtons}
                                     onClick={openModal(commentsLabel, id)}
@@ -89,11 +100,11 @@ class ArticleComments extends Component {
                             }
                         </ToggleShowContext.Consumer>
                     </ArticleCommentsHeader>
-                    {this.state.isOpenComments && <ArticleCommentsBody>
-                        {comments.map((row, index) =>
+                    {isOpenComments && <ArticleCommentsBody>
+                        {!List.isList(comments) ? null : comments.map((row, index) =>
                             <ArticleCommentsComment
                                 key={index}
-                                comment={row.comment}
+                                comment={row.get("comment")}
                             />
                         )}
                     </ArticleCommentsBody>}

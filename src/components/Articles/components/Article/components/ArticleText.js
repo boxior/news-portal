@@ -13,7 +13,7 @@ class ArticleText extends React.Component {
 
     static propTypes = {
         text: string,
-        isOpenArticle: bool
+        isOpenArticle: bool,
     };
 
     static defaultProps = {

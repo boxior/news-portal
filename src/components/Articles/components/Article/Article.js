@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import {object, string, func, bool} from "prop-types";
+import {object, string, func, bool, array} from "prop-types";
 import ShowHide from "../../../ShowHide/ShowHide";
 import ArticleDate from "./components/ArticleDate";
 import ArticleText from "./components/ArticleText";
@@ -33,7 +33,8 @@ class Article extends Component {
         id: string,
         openModal: func,
         isRemove: bool,
-        actionIdArticle: string
+        actionIdArticle: string,
+        removeArticle: func,
     };
 
     state = {
@@ -53,8 +54,11 @@ class Article extends Component {
     };
 
     removeItem = () => {
-        this.setState({isRemoveItem: true});
+        const {removeArticle, articles, id} = this.props;
 
+        let newArticles = articles.filter( row => row.get("id") !== id);
+
+        removeArticle(newArticles);
         this.closeModal();
     };
 
@@ -66,7 +70,7 @@ class Article extends Component {
     };
 
     render() {
-        const {article, id} = this.props;
+        const {article, id, removeComments, articles} = this.props;
         const {isOpenArticle, isRemoveItem, isOpenModal} = this.state;
         const {onToggleArticle, openModal, removeItem, closeModal} = this;
         const articleLabel = "article";
@@ -75,9 +79,9 @@ class Article extends Component {
             (
                 <ArticleWrap>
                     <ArticleHeader>
-                        <ArticleTitle title={article.title}/>
+                        <ArticleTitle title={article.get("title")}/>
                         <ShowHide
-                            isOpenArticle={isOpenArticle}
+                            isOpen={isOpenArticle}
                             blockName={articleLabel}
                             onToggle={onToggleArticle}
                         />
@@ -95,13 +99,15 @@ class Article extends Component {
                     </ArticleHeader>
 
                     <ArticleBody>
-                        <ArticleDate date={article.date}/>
+                        <ArticleDate date={article.get("date")}/>
                         <ArticleText
-                            text={article.text}
+                            text={article.get("text")}
                             isOpenArticle={isOpenArticle}/>
                         {isOpenArticle &&
                         <ArticleComments
-                            comments={article.comments}
+                            comments={article.get("comments")}
+                            removeComments={removeComments}
+                            articles={articles}
                             id={id}
                         />}
                     </ArticleBody>
