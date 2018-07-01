@@ -1,11 +1,28 @@
 import React, {Component} from 'react';
 import Header from "../components/Header/Header";
 import Articles from "../components/Articles/Articles";
-import articles from "../resourses/articles";
 import ToggleShowContext from "../components/ToggleShowContext/ToggleShowContext"
-import {Provider} from "react-redux"
-import store from "../store/createStore";
 import AddBlock from "../components/AddBlock/AddBlock";
+import Auth from "../components/Auth/Auth";
+import LogOut from "../components/LogOut/LogOut";
+import {connect} from "react-redux"
+import styled from "styled-components"
+import {getToken} from "../reducers/common";
+import {Map} from "immutable"
+
+const AppWrap = styled.div`
+  
+`;
+
+const mapStateToProps = state => ({
+    token: state.getIn(["common", "token"]),
+    account: state.getIn(["common", "account"])
+});
+
+const mapDispatchToProps = dispatch => ({
+    getToken: () =>
+        dispatch(getToken()),
+});
 
 class App extends Component {
 
@@ -19,26 +36,44 @@ class App extends Component {
         });
     };
 
+    componentDidMount() {
+        const {getToken} = this.props;
+
+        getToken();
+    };
+
     render() {
         const title = "News portal";
         const {toggleShowRemoveButtons} = this;
         const {isShowRemoveButtons} = this.state;
+        const {token, getToken, account} = this.props;
 
         return (
-            <Provider store={store}>
-                <ToggleShowContext.Provider
-                    value={{
-                        isShowRemoveButtons: isShowRemoveButtons,
-                        toggleShowRemoveButtons: toggleShowRemoveButtons
-                    }}
-                >
-                    <Header title={title}/>
-                    <Articles/>
-                    <AddBlock/>
-                </ToggleShowContext.Provider>
-            </Provider>
+            <AppWrap>
+                {token && token !== "undefined"
+                    ?
+                    <ToggleShowContext.Provider
+                        value={{
+                            isShowRemoveButtons: isShowRemoveButtons,
+                            toggleShowRemoveButtons: toggleShowRemoveButtons
+                        }}
+                    >
+                        <LogOut
+                            getToken={getToken}
+                            userName={Map(account).get("name")}
+                        />
+                        <Header title={title}/>
+                        <Articles/>
+                        <AddBlock/>
+                    </ToggleShowContext.Provider>
+                    :
+                    <Auth
+
+                    />
+                }
+            </AppWrap>
         )
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

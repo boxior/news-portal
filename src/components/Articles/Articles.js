@@ -1,9 +1,10 @@
-import React from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 import {array, func, string, bool, object} from "prop-types";
 import Article from "./components/Article/Article";
 import {connect} from "react-redux"
-import {removeArticle, removeComments} from "../../reducers/articles";
+import {removeComments} from "../../reducers/articles";
+import {getArticlesApi, removeArticleApi} from "../../middlewares/agent";
 
 const ArticlesWrap = styled.div`
     
@@ -14,12 +15,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    removeArticle: articles => dispatch(removeArticle(articles)),
-    removeComments: articles => dispatch(removeComments(articles))
+    removeArticleApi: (slug) => dispatch(removeArticleApi(slug)),
+    removeComments: articles => dispatch(removeComments(articles)),
+    getArticlesApi: () =>
+        dispatch(getArticlesApi()),
 });
 
 
-class Articles extends React.Component {
+class Articles extends Component {
 
     static propTypes = {
         articles: object,
@@ -27,17 +30,23 @@ class Articles extends React.Component {
         removeComments: func
     };
 
+    componentDidMount() {
+        const {getArticlesApi} = this.props;
+
+        getArticlesApi();
+    };
+
     render() {
-        const {articles, removeArticle, removeComments} = this.props;
+        const {articles, removeArticleApi, removeComments} = this.props;
 
         return (
             <ArticlesWrap>
-                {articles.map(row =>
+                {articles.map((row, index) =>
                     (<Article
-                        key={row.get("id")}
-                        id={row.get("id")}
+                        key={index}
+                        id={row.get("_id")}
                         article={row}
-                        removeArticle={removeArticle}
+                        removeArticleApi={removeArticleApi}
                         removeComments={removeComments}
                         articles={articles}
                     />)

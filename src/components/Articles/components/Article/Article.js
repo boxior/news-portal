@@ -54,11 +54,10 @@ class Article extends Component {
     };
 
     removeItem = () => {
-        const {removeArticle, articles, id} = this.props;
+        const {removeArticleApi, article} = this.props;
 
-        let newArticles = articles.filter( row => row.get("id") !== id);
+        removeArticleApi(article.get("slug"));
 
-        removeArticle(newArticles);
         this.closeModal();
     };
 
@@ -99,7 +98,7 @@ class Article extends Component {
                     </ArticleHeader>
 
                     <ArticleBody>
-                        <ArticleDate date={article.get("date")}/>
+                        <ArticleDate date={article.get("createAt")}/>
                         <ArticleText
                             text={article.get("text")}
                             isOpenArticle={isOpenArticle}/>

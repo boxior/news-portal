@@ -1,17 +1,23 @@
-import {createStore, compose} from "redux"
+import {createStore, applyMiddleware, compose} from "redux"
 import rootReducer from "./reducer"
 import {fromJS} from "immutable";
+import index from "../middlewares/index";
+import thunk from "redux-thunk";
+import {auth} from "../middlewares/auth";
+import {addRemoveArticle} from "../middlewares/addRemoveArticle";
 
 const initialState = fromJS({});
+const enhancers = [];
+const middleware = [thunk, index, auth, addRemoveArticle /*, apiMiddleware */];
 
-const composeEnhancers =
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-            // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-            maxAge: 10
-        }) : compose;
+const devToolsExtension = window.devToolsExtension;
 
-const store = createStore(rootReducer, initialState, composeEnhancers());
+if (typeof devToolsExtension === "function") {
+    enhancers.push(devToolsExtension());
+}
+
+const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
+
+const store = createStore(rootReducer, initialState, composedEnhancers);
 
 export default store;
