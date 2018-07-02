@@ -14,7 +14,8 @@ import ToggleShowContext from "../../../ToggleShowContext/ToggleShowContext"
 
 
 const ArticleWrap = styled.div`
-  
+    padding: 10px 0;
+    border-bottom: 1px solid grey;
 `;
 
 const ArticleHeader = styled.div`
@@ -30,7 +31,7 @@ class Article extends Component {
 
     static propTypes = {
         article: object.isRequired,
-        id: string,
+        article_id: string,
         openModal: func,
         isRemove: bool,
         actionIdArticle: string,
@@ -69,7 +70,7 @@ class Article extends Component {
     };
 
     render() {
-        const {article, id, removeComments, articles} = this.props;
+        const {article, article_id, removeCommentApi, articles, addCommentApi} = this.props;
         const {isOpenArticle, isRemoveItem, isOpenModal} = this.state;
         const {onToggleArticle, openModal, removeItem, closeModal} = this;
         const articleLabel = "article";
@@ -88,7 +89,7 @@ class Article extends Component {
                             {({isShowRemoveButtons}) =>
                                 <Remove
                                     isShowRemoveButtons={isShowRemoveButtons}
-                                    onClick={openModal(articleLabel, id)}
+                                    onClick={openModal(articleLabel, article_id)}
                                     label={articleLabel}
                                 />
                             }
@@ -105,9 +106,10 @@ class Article extends Component {
                         {isOpenArticle &&
                         <ArticleComments
                             comments={article.get("comments")}
-                            removeComments={removeComments}
+                            removeCommentApi={removeCommentApi}
                             articles={articles}
-                            id={id}
+                            article_id={article_id}
+                            addCommentApi={addCommentApi}
                         />}
                     </ArticleBody>
                     <ModalReact

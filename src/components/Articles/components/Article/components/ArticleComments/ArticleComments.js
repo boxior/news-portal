@@ -8,6 +8,7 @@ import Remove from "../../../../../Remove/Remove";
 import ModalReact from "../../../../../ModalReact/ModalReact";
 import ToggleShowContext from "../../../../../ToggleShowContext/ToggleShowContext"
 import {List} from "immutable"
+import AddComment from "./AddComment";
 
 //styled
 
@@ -30,8 +31,8 @@ class ArticleComments extends Component {
     static propTypes = {
         comments: object,
         openModal: func,
-        removeComments: func,
-        id: string,
+        removeCommentApi: func,
+        article_id: string,
         articles: object
     };
 
@@ -51,17 +52,8 @@ class ArticleComments extends Component {
     };
 
     removeItem = () => {
-        const {removeComments, id, articles} = this.props;
-
-        let newArticles = articles.map(row => {
-            if (row.get("id") === id) {
-                return row = row.delete("comments")
-            }
-
-            return row;
-        });
-
-        removeComments(newArticles);
+        const {article_id} = this.props;
+        console.log("remove_articles");
         this.closeModal();
     };
 
@@ -73,7 +65,7 @@ class ArticleComments extends Component {
     };
 
     render() {
-        const {comments, id} = this.props;
+        const {comments, article_id, addCommentApi, removeCommentApi} = this.props;
         const {closeModal, removeItem, openModal} = this;
         const {isOpenModal, isOpenComments} = this.state;
 
@@ -90,30 +82,36 @@ class ArticleComments extends Component {
                             blockName={commentsLabel}
                             onToggle={this.onToggleComments}
                         />
-                        <ToggleShowContext.Consumer>
-                            {({isShowRemoveButtons}) =>
-                                <Remove
-                                    isShowRemoveButtons={isShowRemoveButtons}
-                                    onClick={openModal(commentsLabel, id)}
-                                    label={commentsLabel}
-                                />
-                            }
-                        </ToggleShowContext.Consumer>
+                        {/*<ToggleShowContext.Consumer>*/}
+                            {/*{({isShowRemoveButtons}) =>*/}
+                                {/*<Remove*/}
+                                    {/*isShowRemoveButtons={isShowRemoveButtons}*/}
+                                    {/*onClick={openModal(commentsLabel, article_id)}*/}
+                                    {/*label={commentsLabel}*/}
+                                {/*/>*/}
+                            {/*}*/}
+                        {/*</ToggleShowContext.Consumer>*/}
                     </ArticleCommentsHeader>
                     {isOpenComments && <ArticleCommentsBody>
-                        {!List.isList(comments) ? null : comments.map((row, index) =>
+                        {List.isList(comments) ? comments.map((row, index) =>
                             <ArticleCommentsComment
                                 key={index}
                                 comment={row.get("comment")}
+                                comment_id={row.get("id")}
+                                removeCommentApi={removeCommentApi}
                             />
-                        )}
+                        ) : null}
+                        <AddComment
+                            article_id={article_id}
+                            addCommentApi={addCommentApi}
+                        />
                     </ArticleCommentsBody>}
-                    <ModalReact
-                        isOpenModal={isOpenModal}
-                        closeModal={closeModal}
-                        labelModal={commentsLabel}
-                        removeItem={removeItem}
-                    />
+                    {/*<ModalReact*/}
+                        {/*isOpenModal={isOpenModal}*/}
+                        {/*closeModal={closeModal}*/}
+                        {/*labelModal={commentsLabel}*/}
+                        {/*removeItem={removeItem}*/}
+                    {/*/>*/}
                 </ArticleCommentsWrap>
             );
     }

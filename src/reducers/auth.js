@@ -1,7 +1,6 @@
 import {GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP} from "../store/constants";
 import {fromJS, Map} from "immutable"
 import {getCookie} from "../cookies";
-import {SUCCESS} from "../middlewares";
 
 //Action creators
 

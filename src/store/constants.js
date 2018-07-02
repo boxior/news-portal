@@ -1,4 +1,5 @@
-export const REMOVE_COMMENTS = "REMOVE_COMMENTS";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const REMOVE_COMMENT = "REMOVE_COMMENT";
 export const ADD_ARTICLE = "ADD_ARTICLE";
 export const REMOVE_ARTICLE = "REMOVE_ARTICLE";
 

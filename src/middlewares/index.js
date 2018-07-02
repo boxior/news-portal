@@ -1,4 +1,4 @@
-import {ADD_ARTICLE, REMOVE_ARTICLE, SIGNIN, SIGNUP} from "../store/constants";
+import {ADD_ARTICLE, ADD_COMMENT, REMOVE_ARTICLE, REMOVE_COMMENT, SIGNIN, SIGNUP} from "../store/constants";
 import {getToken} from "../reducers/auth";
 import {setCookie} from "../cookies";
 import {getArticlesApi} from "../reducers/articles";
@@ -43,11 +43,12 @@ const fetchMiddleware = store => next => action => {
             })
     }
 
-    if(type === ADD_ARTICLE + SUCCESS || type === REMOVE_ARTICLE + SUCCESS) {
+    if (type === ADD_ARTICLE + SUCCESS || type === REMOVE_ARTICLE + SUCCESS ||
+        type === REMOVE_COMMENT + SUCCESS || type === ADD_COMMENT + SUCCESS) {
         dispatch(getArticlesApi());
     }
 
-    if(type === SIGNIN + SUCCESS || type === SIGNUP + SUCCESS) {
+    if (type === SIGNIN + SUCCESS || type === SIGNUP + SUCCESS) {
         setCookie("token", payload.token, payload.ttl);
         dispatch(getToken());
     }
