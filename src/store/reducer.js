@@ -1,8 +1,8 @@
 import {combineReducers} from "redux-immutable"
 import articlesReducer from "../reducers/articles"
-import common from "../reducers/common"
+import auth from "../reducers/auth"
 
 export default combineReducers({
     articles: articlesReducer,
-    common: common
+    auth: auth
 });

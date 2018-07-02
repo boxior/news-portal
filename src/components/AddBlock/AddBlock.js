@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {object, array, string, bool, func} from "prop-types";
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
-import {addArticleApi} from "../../middlewares/agent";
+import {addArticleApi} from "../../reducers/articles";
 
 //styled
 

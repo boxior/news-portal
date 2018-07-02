@@ -7,7 +7,7 @@ import Auth from "../components/Auth/Auth";
 import LogOut from "../components/LogOut/LogOut";
 import {connect} from "react-redux"
 import styled from "styled-components"
-import {getToken} from "../reducers/common";
+import {getToken, getUserDetailsApi} from "../reducers/auth";
 import {Map} from "immutable"
 
 const AppWrap = styled.div`
@@ -15,13 +15,15 @@ const AppWrap = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    token: state.getIn(["common", "token"]),
-    account: state.getIn(["common", "account"])
+    token: state.getIn(["auth", "token"]),
+    account: state.getIn(["auth", "account"])
 });
 
 const mapDispatchToProps = dispatch => ({
     getToken: () =>
         dispatch(getToken()),
+    getUserDetailsApi: () =>
+        dispatch(getUserDetailsApi())
 });
 
 class App extends Component {
@@ -37,9 +39,10 @@ class App extends Component {
     };
 
     componentDidMount() {
-        const {getToken} = this.props;
+        const {getToken, getUserDetailsApi} = this.props;
 
         getToken();
+        getUserDetailsApi();
     };
 
     render() {

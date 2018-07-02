@@ -3,8 +3,7 @@ import styled from "styled-components";
 import {array, func, string, bool, object} from "prop-types";
 import Article from "./components/Article/Article";
 import {connect} from "react-redux"
-import {removeComments} from "../../reducers/articles";
-import {getArticlesApi, removeArticleApi} from "../../middlewares/agent";
+import {getArticlesApi, removeArticleApi, removeComments} from "../../reducers/articles";
 
 const ArticlesWrap = styled.div`
     

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {string, object, array, bool, func} from 'prop-types';
 import {connect} from 'react-redux';
 import SignUpForm from "./components/SignUpForm";
-import {signUpApi} from "../../../middlewares/agent";
+import {signUpApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
 

@@ -3,12 +3,10 @@ import rootReducer from "./reducer"
 import {fromJS} from "immutable";
 import index from "../middlewares/index";
 import thunk from "redux-thunk";
-import {auth} from "../middlewares/auth";
-import {addRemoveArticle} from "../middlewares/addRemoveArticle";
 
 const initialState = fromJS({});
 const enhancers = [];
-const middleware = [thunk, index, auth, addRemoveArticle /*, apiMiddleware */];
+const middleware = [thunk, index /*, apiMiddleware */];
 
 const devToolsExtension = window.devToolsExtension;
 
