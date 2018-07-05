@@ -9,15 +9,18 @@ const ArticleCommentsCommentWrap = styled.p`
 `;
 
 const ArticleCommentsComment = (props) => {
-    const {comment, comment_id, removeCommentApi} = props;
+    const {comment, comment_id, removeCommentApi, token} = props;
 
     return (
         <ArticleCommentsCommentWrap>
             {comment}
-            <RemoveComment
-                removeCommentApi={removeCommentApi}
-                comment_id={comment_id}
-            />
+            {(token && token !== "undefined") ?
+                <RemoveComment
+                    removeCommentApi={removeCommentApi}
+                    comment_id={comment_id}
+                /> : null
+            }
+
         </ArticleCommentsCommentWrap>
     );
 };

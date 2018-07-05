@@ -4,6 +4,8 @@ import {string} from "prop-types";
 import {Link} from "react-router-dom"
 import LogOut from "../LogOut/LogOut";
 import {Map} from "immutable"
+import {withRouter} from "react-router-dom"
+import {pathAddArticle, pathHome, pathLogin, pathRegister} from "../layouts/CoreLayputs";
 
 const HeaderWrap = styled.div`
     display: flex;
@@ -29,17 +31,24 @@ const Header = (props) => {
         <HeaderWrap>
             <HeaderTitle>{title}</HeaderTitle>
             <HeaderBody>
-                <Link to={`/`}>Home page</Link>
+                <Link to={pathHome}>Home page</Link>
 
                 {
-                    token && token !== "undefined"
+                    (token && token !== "undefined")
                         ?
-                        <LogOut
-                            getToken={getToken}
-                            userName={Map(account).get("name")}
-                        />
+                        <React.Fragment>
+                            <Link to={pathAddArticle}>Add Article</Link>
+                            <LogOut
+                                getToken={getToken}
+                                userName={Map(account).get("name")}
+                            />
+                        </React.Fragment>
                         :
-                        <Link to={`/login`}>Login</Link>
+                        props.location.pathname === pathLogin
+                            ?
+                            <Link to={pathRegister}>Register</Link>
+                            :
+                            <Link to={pathLogin}>Login</Link>
                 }
 
             </HeaderBody>
@@ -55,4 +64,4 @@ Header.defaultProps = {
     title: "default title"
 };
 
-export default Header;
+export default withRouter(Header);

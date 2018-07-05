@@ -3,8 +3,6 @@ import styled from "styled-components";
 import {array, func, string, bool, object} from "prop-types";
 import Article from "./components/Article/Article";
 import {connect} from "react-redux"
-import SwitchReact from "../SwitchReact/SwitchReact";
-import ToggleShowContext from "../ToggleShowContext/ToggleShowContext"
 
 import {
     addCommentApi,
@@ -16,14 +14,9 @@ import {
 const ArticlesWrap = styled.div`
 `;
 
-const ArticlesHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-`;
-
 const mapStateToProps = state => ({
     articles: state.getIn(["articles", "articles"]),
+    token: state.getIn(["auth", "token"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -51,23 +44,10 @@ class Articles extends Component {
     };
 
     render() {
-        const {articles, removeCommentApi, addCommentApi, removeArticleApi} = this.props;
+        const {articles, removeCommentApi, addCommentApi, removeArticleApi, token} = this.props;
 
         return (
             <ArticlesWrap>
-                <ArticlesHeader>
-                    <ToggleShowContext.Consumer>
-                        {({isShowRemoveButtons, toggleShowRemoveButtons}) =>
-                            <SwitchReact
-                                onChange={toggleShowRemoveButtons}
-                                checked={isShowRemoveButtons}
-                                id="normal-switch"
-                            />
-                        }
-
-                    </ToggleShowContext.Consumer>
-                </ArticlesHeader>
-
                 {articles.map((row, index) =>
                     (<Article
                         key={index}
@@ -77,6 +57,7 @@ class Articles extends Component {
                         removeArticleApi={removeArticleApi}
                         articles={articles}
                         addCommentApi={addCommentApi}
+                        token={token}
                     />)
                 )}
             </ArticlesWrap>

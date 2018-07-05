@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from "../components/Header/Header";
-import ToggleShowContext from "../components/ToggleShowContext/ToggleShowContext"
 import {connect} from "react-redux"
 import styled from "styled-components"
 import {getToken, getUserDetailsApi} from "../reducers/auth";
@@ -27,16 +26,6 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends Component {
 
-    state = {
-        isShowRemoveButtons: true
-    };
-
-    toggleShowRemoveButtons = () => {
-        this.setState(prev => {
-            return {isShowRemoveButtons: !prev.isShowRemoveButtons}
-        });
-    };
-
     componentDidMount() {
         const {getToken, getUserDetailsApi} = this.props;
 
@@ -46,30 +35,20 @@ class App extends Component {
 
     render() {
         const title = "News portal";
-        const {toggleShowRemoveButtons} = this;
-        const {isShowRemoveButtons} = this.state;
         const {token, getToken, account} = this.props;
 
         return (
             <BrowserRouter>
                 <AppWrap>
-                    <ToggleShowContext.Provider
-                        value={{
-                            isShowRemoveButtons: isShowRemoveButtons,
-                            toggleShowRemoveButtons: toggleShowRemoveButtons
-                        }}
-                    >
-                        <React.Fragment>
-                            <Header
-                                title={title}
-                                getToken={getToken}
-                                account={account}
-                                token={token}
-                            />
-                            <Route path={`/`} component={CoreLayout}/>
-                        </React.Fragment>
-
-                    </ToggleShowContext.Provider>
+                    <React.Fragment>
+                        <Header
+                            title={title}
+                            getToken={getToken}
+                            account={account}
+                            token={token}
+                        />
+                        <Route path={`/`} component={CoreLayout}/>
+                    </React.Fragment>
                 </AppWrap>
             </BrowserRouter>
         )

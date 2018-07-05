@@ -7,15 +7,21 @@ import AddBlock from "../AddBlock/AddBlock";
 import ArticlePage from "../ArticlePage/ArticlePage";
 import NoMatch from "../NoMatch";
 
+export const pathHome = "/";
+export const pathLogin = "/login";
+export const pathRegister = "/register";
+export const pathAddArticle = "/add-article";
+export const pathArticle = "/article/:slug";
+
 const CoreLayout = props => {
     return (
         <Switch>
-            <Route path="/" exact component={Articles} />
-            <Route path="/login" component={SignInContainer} />
-            <Route path="/register" component={SignUpContainer} />
-            <Route path="/add-article" component={AddBlock} />
-            <Route path="/article/:slug" component={ArticlePage} />
-            <Route component={NoMatch} />
+            <Route path={pathHome} exact component={Articles}/>
+            <Route path={pathLogin} component={SignInContainer}/>
+            <Route path={pathRegister} component={SignUpContainer}/>
+            <Route path={pathAddArticle} component={AddBlock}/>
+            <Route path={pathArticle} component={ArticlePage}/>
+            <Route component={NoMatch}/>
         </Switch>
     );
 };

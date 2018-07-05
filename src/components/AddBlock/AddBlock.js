@@ -5,6 +5,7 @@ import {object, array, string, bool, func} from "prop-types";
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import {addArticleApi} from "../../reducers/articles";
+import {pathLogin} from "../layouts/CoreLayputs";
 
 //styled
 
@@ -13,6 +14,7 @@ const AddBlockWrap = styled.div`
 
 const mapStateToProps = state => ({
     articles: state.getIn(["articles", "articles"]),
+    token: state.getIn(["auth", "token"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,6 +51,14 @@ class AddBlock extends Component {
         this.setState({
             [name]: value
         });
+    };
+
+    componentDidMount() {
+        const {token, history} = this.props;
+
+        if(!token || token === "undefined") {
+            history.push(pathLogin);
+        }
     };
 
     render() {

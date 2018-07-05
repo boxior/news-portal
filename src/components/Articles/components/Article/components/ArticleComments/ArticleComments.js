@@ -6,7 +6,6 @@ import ShowHide from "../../../../../ShowHide/ShowHide";
 import ArticleCommentsComment from "./ArticleCommentsComment";
 import Remove from "../../../../../Remove/Remove";
 import ModalReact from "../../../../../ModalReact/ModalReact";
-import ToggleShowContext from "../../../../../ToggleShowContext/ToggleShowContext"
 import {List} from "immutable"
 import AddComment from "./AddComment";
 
@@ -65,7 +64,7 @@ class ArticleComments extends Component {
     };
 
     render() {
-        const {comments, article_id, addCommentApi, removeCommentApi} = this.props;
+        const {comments, article_id, addCommentApi, removeCommentApi, token} = this.props;
         const {closeModal, removeItem, openModal} = this;
         const {isOpenModal, isOpenComments} = this.state;
 
@@ -82,15 +81,14 @@ class ArticleComments extends Component {
                             blockName={commentsLabel}
                             onToggle={this.onToggleComments}
                         />
-                        {/*<ToggleShowContext.Consumer>*/}
-                            {/*{({isShowRemoveButtons}) =>*/}
-                                {/*<Remove*/}
-                                    {/*isShowRemoveButtons={isShowRemoveButtons}*/}
-                                    {/*onClick={openModal(commentsLabel, article_id)}*/}
-                                    {/*label={commentsLabel}*/}
-                                {/*/>*/}
-                            {/*}*/}
-                        {/*</ToggleShowContext.Consumer>*/}
+
+                        {/*for now remove only one comment*/}
+                        {/*<Remove*/}
+                        {/*isShowRemoveButtons={(token && token !== "undefined")}*/}
+                        {/*onClick={openModal(commentsLabel, article_id)}*/}
+                        {/*label={commentsLabel}*/}
+                        {/*/>*/}
+
                     </ArticleCommentsHeader>
                     {isOpenComments && <ArticleCommentsBody>
                         {List.isList(comments) ? comments.map((row, index) =>
@@ -99,18 +97,23 @@ class ArticleComments extends Component {
                                 comment={row.get("comment")}
                                 comment_id={row.get("id")}
                                 removeCommentApi={removeCommentApi}
+                                token={token}
                             />
                         ) : null}
-                        <AddComment
-                            article_id={article_id}
-                            addCommentApi={addCommentApi}
-                        />
+                        {(token && token !== "undefined") ?
+                            <AddComment
+                                article_id={article_id}
+                                addCommentApi={addCommentApi}
+                            /> : null
+                        }
+
                     </ArticleCommentsBody>}
+                    {/*for now remove only one comment*/}
                     {/*<ModalReact*/}
-                        {/*isOpenModal={isOpenModal}*/}
-                        {/*closeModal={closeModal}*/}
-                        {/*labelModal={commentsLabel}*/}
-                        {/*removeItem={removeItem}*/}
+                    {/*isOpenModal={isOpenModal}*/}
+                    {/*closeModal={closeModal}*/}
+                    {/*labelModal={commentsLabel}*/}
+                    {/*removeItem={removeItem}*/}
                     {/*/>*/}
                 </ArticleCommentsWrap>
             );

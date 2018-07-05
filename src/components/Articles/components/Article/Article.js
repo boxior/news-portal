@@ -7,7 +7,6 @@ import ArticleText from "./components/ArticleText";
 import ArticleComments from "./components/ArticleComments/ArticleComments";
 import Remove from "../../../Remove/Remove";
 import ModalReact from "../../../ModalReact/ModalReact";
-import ToggleShowContext from "../../../ToggleShowContext/ToggleShowContext"
 import {Link} from "react-router-dom"
 
 //styled
@@ -72,55 +71,53 @@ class Article extends Component {
     };
 
     render() {
-        const {article, article_id, removeCommentApi, articles, addCommentApi} = this.props;
+        const {article, article_id, removeCommentApi, articles, addCommentApi, token} = this.props;
         const {isOpenArticle, isOpenModal} = this.state;
         const {onToggleArticle, openModal, removeItem, closeModal} = this;
         const articleLabel = "article";
 
         return (
-                <ArticleWrap>
-                    <ArticleHeader>
-                        <Link to={`/article/${article.get("slug")}`}><ArticleTitle>{article.get("title")}</ArticleTitle></Link>
-                        <ShowHide
-                            isOpen={isOpenArticle}
-                            blockName={articleLabel}
-                            onToggle={onToggleArticle}
-                        />
-                        <ToggleShowContext.Consumer>
-                            {({isShowRemoveButtons}) =>
-                                <Remove
-                                    isShowRemoveButtons={isShowRemoveButtons}
-                                    onClick={openModal(articleLabel, article_id)}
-                                    label={articleLabel}
-                                />
-                            }
-
-                        </ToggleShowContext.Consumer>
-
-                    </ArticleHeader>
-
-                    <ArticleBody>
-                        <ArticleDate date={article.get("createAt")}/>
-                        <ArticleText
-                            text={article.get("text")}
-                            isOpenArticle={isOpenArticle}/>
-                        {isOpenArticle &&
-                        <ArticleComments
-                            comments={article.get("comments")}
-                            removeCommentApi={removeCommentApi}
-                            articles={articles}
-                            article_id={article_id}
-                            addCommentApi={addCommentApi}
-                        />}
-                    </ArticleBody>
-                    <ModalReact
-                        isOpenModal={isOpenModal}
-                        closeModal={closeModal}
-                        labelModal={articleLabel}
-                        removeItem={removeItem}
+            <ArticleWrap>
+                <ArticleHeader>
+                    <Link
+                        to={`/article/${article.get("slug")}`}><ArticleTitle>{article.get("title")}</ArticleTitle></Link>
+                    <ShowHide
+                        isOpen={isOpenArticle}
+                        blockName={articleLabel}
+                        onToggle={onToggleArticle}
                     />
-                </ArticleWrap>
-            );
+
+                    <Remove
+                        isShowRemoveButtons={token && token !== "undefined" ? true : false}
+                        onClick={openModal(articleLabel, article_id)}
+                        label={articleLabel}
+                    />
+
+                </ArticleHeader>
+
+                <ArticleBody>
+                    <ArticleDate date={article.get("createAt")}/>
+                    <ArticleText
+                        text={article.get("text")}
+                        isOpenArticle={isOpenArticle}/>
+                    {isOpenArticle &&
+                    <ArticleComments
+                        comments={article.get("comments")}
+                        removeCommentApi={removeCommentApi}
+                        articles={articles}
+                        article_id={article_id}
+                        addCommentApi={addCommentApi}
+                        token={token}
+                    />}
+                </ArticleBody>
+                <ModalReact
+                    isOpenModal={isOpenModal}
+                    closeModal={closeModal}
+                    labelModal={articleLabel}
+                    removeItem={removeItem}
+                />
+            </ArticleWrap>
+        );
     }
 };
 
