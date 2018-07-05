@@ -11,7 +11,8 @@ const ArticlePageWrap = styled.div`
 
 const mapStateToProps = (state, props) => ({
     articles: state.getIn(["articles", "articles"]),
-    article: state.getIn(["articles", "articles"]).find(article => article.get("slug") === props.match.params.slug)
+    slug: props.match.params.slug,
+    article: state.getIn(["article", "article", "data", "0"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,25 +20,32 @@ const mapDispatchToProps = dispatch => ({
         dispatch(getArticleApi(slug))
 });
 
+const ArticleTitle = styled.h1`
+  
+`;
+
+const ArticleText = styled.p`
+  
+`;
+
 
 class ArticlePage extends Component {
 
     componentDidMount() {
-        const {getArticleApi, article} = this.props;
+        const {getArticleApi, slug} = this.props;
 
-        getArticleApi(Map(article).get("slug"))
+        getArticleApi(slug)
     };
 
     render() {
-        const {article, articles} = this.props;
-        console.log("article", article);
-        console.log("articles", articles);
-        console.log("props.match.params", this.props.match.params.slug);
-        return (
+        const {article} = this.props;
+
+        return Map.isMap(article) ? (
             <ArticlePageWrap>
-                ArticlePageWrap
+                <ArticleTitle>{article.get("title")}</ArticleTitle>
+                <ArticleText>{article.get("text")}</ArticleText>
             </ArticlePageWrap>
-        );
+        ) : null;
 
     }
 

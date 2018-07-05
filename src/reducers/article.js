@@ -3,7 +3,7 @@ import {GET_ARTICLE} from "../store/constants";
 
 export const getArticleApi = (slug) => ({
     type: GET_ARTICLE,
-    apiUrl: `/article/${slug}`,
+    apiUrl: `/article/get/${slug}`,
     apiOptions: {
         method: "GET",
         headers: {
