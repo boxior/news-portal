@@ -4,11 +4,11 @@ import {object, string, func, bool, array} from "prop-types";
 import ShowHide from "../../../ShowHide/ShowHide";
 import ArticleDate from "./components/ArticleDate";
 import ArticleText from "./components/ArticleText";
-import ArticleTitle from "./components/ArticleTitle";
 import ArticleComments from "./components/ArticleComments/ArticleComments";
 import Remove from "../../../Remove/Remove";
 import ModalReact from "../../../ModalReact/ModalReact";
 import ToggleShowContext from "../../../ToggleShowContext/ToggleShowContext"
+import {Link} from "react-router-dom"
 
 //styled
 
@@ -27,21 +27,23 @@ const ArticleBody = styled.div`
   
 `;
 
+const ArticleTitle = styled.h2`
+  
+`;
+
 class Article extends Component {
 
     static propTypes = {
         article: object.isRequired,
         article_id: string,
         openModal: func,
-        isRemove: bool,
         actionIdArticle: string,
         removeArticle: func,
     };
 
     state = {
         isOpenArticle: false,
-        isOpenModal: false,
-        isRemoveItem: false,
+        isOpenModal: false
     };
 
     openModal = () => (e) => {
@@ -71,15 +73,14 @@ class Article extends Component {
 
     render() {
         const {article, article_id, removeCommentApi, articles, addCommentApi} = this.props;
-        const {isOpenArticle, isRemoveItem, isOpenModal} = this.state;
+        const {isOpenArticle, isOpenModal} = this.state;
         const {onToggleArticle, openModal, removeItem, closeModal} = this;
         const articleLabel = "article";
 
-        return isRemoveItem ? null :
-            (
+        return (
                 <ArticleWrap>
                     <ArticleHeader>
-                        <ArticleTitle title={article.get("title")}/>
+                        <Link to={`/article/${article.get("slug")}`}><ArticleTitle>{article.get("title")}</ArticleTitle></Link>
                         <ShowHide
                             isOpen={isOpenArticle}
                             blockName={articleLabel}

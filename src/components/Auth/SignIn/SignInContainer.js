@@ -5,7 +5,7 @@ import SignInForm from "./components/SignInForm";
 import {signInApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
-
+    token: state.getIn(["auth", "token"]),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,6 +18,14 @@ class SignInContainer extends Component {
     static propTypes = {
 
     };
+
+    componentWillReceiveProps(nextProps) {
+        const {token, history} = this.props;
+
+        if(nextProps.token !== token && nextProps.token) {
+            history.push('/');
+        }
+    }
 
     render() {
         const {signInApi, getArticlesApi} = this.props;

@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import Header from "../components/Header/Header";
-import Articles from "../components/Articles/Articles";
 import ToggleShowContext from "../components/ToggleShowContext/ToggleShowContext"
-import AddBlock from "../components/AddBlock/AddBlock";
-import Auth from "../components/Auth/Auth";
-import LogOut from "../components/LogOut/LogOut";
 import {connect} from "react-redux"
 import styled from "styled-components"
 import {getToken, getUserDetailsApi} from "../reducers/auth";
-import {Map} from "immutable"
+import CoreLayout from "../components/layouts/CoreLayputs";
+import {Route} from "react-router-dom"
+import {BrowserRouter} from "react-router-dom"
+
 
 const AppWrap = styled.div`
   
@@ -52,29 +51,27 @@ class App extends Component {
         const {token, getToken, account} = this.props;
 
         return (
-            <AppWrap>
-                {token && token !== "undefined"
-                    ?
+            <BrowserRouter>
+                <AppWrap>
                     <ToggleShowContext.Provider
                         value={{
                             isShowRemoveButtons: isShowRemoveButtons,
                             toggleShowRemoveButtons: toggleShowRemoveButtons
                         }}
                     >
-                        <LogOut
-                            getToken={getToken}
-                            userName={Map(account).get("name")}
-                        />
-                        <Header title={title}/>
-                        <Articles/>
-                        <AddBlock/>
-                    </ToggleShowContext.Provider>
-                    :
-                    <Auth
+                        <React.Fragment>
+                            <Header
+                                title={title}
+                                getToken={getToken}
+                                account={account}
+                                token={token}
+                            />
+                            <Route path={`/`} component={CoreLayout}/>
+                        </React.Fragment>
 
-                    />
-                }
-            </AppWrap>
+                    </ToggleShowContext.Provider>
+                </AppWrap>
+            </BrowserRouter>
         )
     }
 }

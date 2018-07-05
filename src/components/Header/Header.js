@@ -1,32 +1,48 @@
 import React from "react";
 import styled from "styled-components";
 import {string} from "prop-types";
-import SwitchReact from "../SwitchReact/SwitchReact";
-import ToggleShowContext from "../ToggleShowContext/ToggleShowContext"
+import {Link} from "react-router-dom"
+import LogOut from "../LogOut/LogOut";
+import {Map} from "immutable"
 
-const HeaderWrap = styled.h1`
+const HeaderWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+`;
+
+const HeaderTitle = styled.h1`
+  text-align: center;
+`;
+
+const HeaderBody = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
 `;
 
 const Header = (props) => {
-    const {title} = props;
+    const {title, account, getToken, token} = props;
 
     return (
         <HeaderWrap>
-            {title}
-            <ToggleShowContext.Consumer>
-                { ({isShowRemoveButtons, toggleShowRemoveButtons}) =>
-                    <SwitchReact
-                        onChange={toggleShowRemoveButtons}
-                        checked={isShowRemoveButtons}
-                        id="normal-switch"
-                    />
+            <HeaderTitle>{title}</HeaderTitle>
+            <HeaderBody>
+                <Link to={`/`}>Home page</Link>
+
+                {
+                    token && token !== "undefined"
+                        ?
+                        <LogOut
+                            getToken={getToken}
+                            userName={Map(account).get("name")}
+                        />
+                        :
+                        <Link to={`/login`}>Login</Link>
                 }
 
-            </ToggleShowContext.Consumer>
-
+            </HeaderBody>
         </HeaderWrap>
     );
 };

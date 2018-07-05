@@ -5,8 +5,7 @@ import {
     GET_ARTICLES,
     REMOVE_ARTICLE, REMOVE_COMMENT
 } from "../store/constants";
-import {fromJS, List, Map} from "immutable"
-import {SUCCESS} from "../middlewares";
+import {fromJS} from "immutable"
 import {getCookie} from "../cookies";
 
 //Action creators
@@ -75,7 +74,7 @@ export const removeCommentApi = id => ({
 //Initial state for this reducer
 
 const initialState = fromJS({
-    articles: articles,
+    articles: [],
 });
 
 const actionHandlers = {

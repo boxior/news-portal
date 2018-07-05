@@ -3,6 +3,9 @@ import styled from "styled-components";
 import {array, func, string, bool, object} from "prop-types";
 import Article from "./components/Article/Article";
 import {connect} from "react-redux"
+import SwitchReact from "../SwitchReact/SwitchReact";
+import ToggleShowContext from "../ToggleShowContext/ToggleShowContext"
+
 import {
     addCommentApi,
     getArticlesApi,
@@ -11,6 +14,12 @@ import {
 } from "../../reducers/articles";
 
 const ArticlesWrap = styled.div`
+`;
+
+const ArticlesHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 `;
 
 const mapStateToProps = state => ({
@@ -24,8 +33,6 @@ const mapDispatchToProps = dispatch => ({
         dispatch(getArticlesApi()),
     addCommentApi: body =>
         dispatch(addCommentApi(body)),
-    removeCommentApi: id =>
-        dispatch(removeCommentApi(id))
 });
 
 
@@ -44,16 +51,30 @@ class Articles extends Component {
     };
 
     render() {
-        const {articles, removeCommentApi, removeComments, addCommentApi} = this.props;
+        const {articles, removeCommentApi, addCommentApi, removeArticleApi} = this.props;
 
         return (
             <ArticlesWrap>
+                <ArticlesHeader>
+                    <ToggleShowContext.Consumer>
+                        {({isShowRemoveButtons, toggleShowRemoveButtons}) =>
+                            <SwitchReact
+                                onChange={toggleShowRemoveButtons}
+                                checked={isShowRemoveButtons}
+                                id="normal-switch"
+                            />
+                        }
+
+                    </ToggleShowContext.Consumer>
+                </ArticlesHeader>
+
                 {articles.map((row, index) =>
                     (<Article
                         key={index}
                         article_id={row.get("_id")}
                         article={row}
                         removeCommentApi={removeCommentApi}
+                        removeArticleApi={removeArticleApi}
                         articles={articles}
                         addCommentApi={addCommentApi}
                     />)

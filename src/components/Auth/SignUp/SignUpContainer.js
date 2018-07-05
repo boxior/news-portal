@@ -5,6 +5,7 @@ import SignUpForm from "./components/SignUpForm";
 import {signUpApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
+    token: state.getIn(["auth", "token"]),
 
 });
 
@@ -18,6 +19,14 @@ class SignUpContainer extends Component {
     static propTypes = {
 
     };
+
+    componentWillReceiveProps(nextProps) {
+        const {token, history} = this.props;
+
+        if(nextProps.token !== token && nextProps.token) {
+            history.push('/');
+        }
+    }
 
     render() {
         const {signUpApi} = this.props;
