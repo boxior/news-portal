@@ -7,6 +7,7 @@ import {
 } from "../store/constants";
 import {fromJS} from "immutable"
 import {getCookie} from "../cookies";
+import {SUCCESS} from "../middlewares";
 
 //Action creators
 
@@ -84,8 +85,8 @@ const actionHandlers = {
     // [ADD_COMMENT + SUCCESS]: (state, action) => {
     //     return  state.set("articles", fromJS(action.payload));
     // },
-    ["GET_ARTICLES_SUCCESS"]: (state, action) => {
-        return  state.set("articles", fromJS(action.payload.items));
+    [(GET_ARTICLES + SUCCESS)]: (state, action) => {
+        return state.set("articles", fromJS(action.payload.items));
     }
 };
 

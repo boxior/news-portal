@@ -19,6 +19,14 @@ class SignInContainer extends Component {
 
     };
 
+    componentDidMount() {
+        const {token, history} = this.props;
+
+        if(token && token !== "undefined") {
+            history.push('/');
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const {token, history} = this.props;
 

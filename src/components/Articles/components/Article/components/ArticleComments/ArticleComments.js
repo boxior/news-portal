@@ -52,7 +52,6 @@ class ArticleComments extends Component {
 
     removeItem = () => {
         const {article_id} = this.props;
-        console.log("remove_articles");
         this.closeModal();
     };
 

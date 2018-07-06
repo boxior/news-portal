@@ -8,5 +8,6 @@ export const GET_USER_DETAILS = "GET_USER_DETAILS";
 
 export const GET_ARTICLES = "GET_ARTICLES";
 export const GET_ARTICLE = "GET_ARTICLE";
+export const UPDATE_ARTICLE = "UPDATE_ARTICLE";
 export const SIGNIN = "SIGNIN";
 export const SIGNUP = "SIGNUP";

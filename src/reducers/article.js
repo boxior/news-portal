@@ -1,5 +1,7 @@
 import {fromJS} from "immutable";
-import {GET_ARTICLE} from "../store/constants";
+import {ADD_ARTICLE, GET_ARTICLE, UPDATE_ARTICLE} from "../store/constants";
+import {START, SUCCESS} from "../middlewares";
+import {getCookie} from "../cookies";
 
 export const getArticleApi = (slug) => ({
     type: GET_ARTICLE,
@@ -12,15 +14,36 @@ export const getArticleApi = (slug) => ({
     }
 });
 
+export const updateArticleApi = (slug, body) => ({
+    type: UPDATE_ARTICLE,
+    apiUrl: `/article/update/${slug}`,
+    apiOptions: {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("token")
+        }
+    }
+});
+
 
 const initialState = fromJS({
     article: null,
+    isGetArticle: false
 });
 
 const actionHandlers = {
-    ["GET_ARTICLE_SUCCESS"]: (state, action) => {
+    [(ADD_ARTICLE + START)]: (state, action) => {
+        return  state.set("isGetArticle", true);
+    },
+    [(ADD_ARTICLE + SUCCESS)]: (state, action) => {
+        return  state.set("isGetArticle", false);
+    },
+    [(GET_ARTICLE + SUCCESS)]: (state, action) => {
         return  state.set("article", fromJS(action.payload));
     }
+
 };
 
 const reducer = (state = initialState, action) => {

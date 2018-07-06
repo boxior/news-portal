@@ -4,12 +4,15 @@ import {object, array, string, bool, func} from "prop-types";
 import {connect} from "react-redux"
 import {getArticleApi} from "../../reducers/article";
 import {Map} from "immutable"
+import {pathEditArticle} from "../layouts/CoreLayputs";
+import {Link} from "react-router-dom"
 
 const ArticlePageWrap = styled.div`
     
 `;
 
 const mapStateToProps = (state, props) => ({
+    token: state.getIn(["auth", "token"]),
     articles: state.getIn(["articles", "articles"]),
     slug: props.match.params.slug,
     article: state.getIn(["article", "article", "data", "0"])
@@ -38,10 +41,13 @@ class ArticlePage extends Component {
     };
 
     render() {
-        const {article} = this.props;
+        const {article, token, slug} = this.props;
 
         return Map.isMap(article) ? (
             <ArticlePageWrap>
+                {token && token !== "undefined" ?
+                    <Link to={`/edit-article/${slug}`}>Edit Article</Link> : null
+                }
                 <ArticleTitle>{article.get("title")}</ArticleTitle>
                 <ArticleText>{article.get("text")}</ArticleText>
             </ArticlePageWrap>

@@ -17,7 +17,6 @@ const ImgWrap = styled.div`
 
 const LogOut = (props) => {
     const {userName, getToken} = props;
-    console.log("props", props);
 
     const onClick = e => {
         deleteCookie("token");
