@@ -35,7 +35,7 @@ class EditArticle extends Component {
     };
 
     static defaultProps = {
-        article: Map().set("title", "").set("text", "").set("isPublished", true).set("publicatedAt", Map())
+        article: Map().set("title", "").set("text", "").set("isPublished", true).set("publicatedAt", Map()),
     };
 
 
@@ -85,7 +85,8 @@ class EditArticle extends Component {
                 publicatedAt: nextProps.article.get("publicatedAt"), // date, optional
             })
         }
-        if(nextProps.token !== token && (!token || token === "undefined")) {
+
+        if(nextProps.token !== token || (!token || token === "undefined")) {
             this.props.history.push(pathLogin)
         }
     }
