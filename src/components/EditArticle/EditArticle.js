@@ -8,6 +8,7 @@ import {addArticleApi} from "../../reducers/articles";
 import {pathLogin} from "../layouts/CoreLayputs";
 import {getArticleApi, updateArticleApi} from "../../reducers/article";
 import {Map} from "immutable"
+import {getCookie} from "../../cookies";
 
 //styled
 
@@ -69,9 +70,9 @@ class EditArticle extends Component {
             getArticleApi(slug);
         }
 
-        // if(!token || token === "undefined") {
-        //     this.props.history.push(pathLogin)
-        // }
+        if(!getCookie("token") || getCookie("token") === "undefined") {
+            this.props.history.push(pathLogin)
+        }
     };
 
     componentWillReceiveProps(nextProps) {
@@ -84,9 +85,9 @@ class EditArticle extends Component {
                 publicatedAt: nextProps.article.get("publicatedAt"), // date, optional
             })
         }
-        // if(nextProps.token !== token && (!token || token === "undefined")) {
-        //     this.props.history.push(pathLogin)
-        // }
+        if(nextProps.token !== token && (!token || token === "undefined")) {
+            this.props.history.push(pathLogin)
+        }
     }
 
     render() {
