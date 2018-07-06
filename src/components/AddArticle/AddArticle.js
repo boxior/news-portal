@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import {addArticleApi} from "../../reducers/articles";
 import {pathLogin} from "../layouts/CoreLayputs";
+import {getCookie} from "../../cookies";
 
 //styled
 
@@ -39,8 +40,14 @@ class AddArticle extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+        const {token} = this.props;
+        
         if(nextProps.isGetArticle !== this.props.isGetArticle && !nextProps.isGetArticle) {
             this.setState({title: "", text: ""});
+        }
+
+        if(nextProps.token !== token || (!token || token === "undefined")) {
+            this.props.history.push(pathLogin)
         }
     };
 
@@ -61,16 +68,15 @@ class AddArticle extends Component {
     };
 
     componentDidMount() {
-        const {token, history} = this.props;
-
-        if(!token || token === "undefined") {
-            history.push(pathLogin);
+        if(!getCookie("token") || getCookie("token") === "undefined") {
+            this.props.history.push(pathLogin)
         }
     };
 
     render() {
         const {AddArticleApi, onChangeInput} = this;
         const {title, text} = this.state;
+        const {token} = this.props;
 
         return (
             <AddArticleWrap>
@@ -102,6 +108,7 @@ class AddArticle extends Component {
                         variant={`contained`}
                         color={`primary`}
                         type={`submit`}
+                        disabled={token && token !== "undefined" ? false : true}
                     >
                         Add article
                     </Button>
