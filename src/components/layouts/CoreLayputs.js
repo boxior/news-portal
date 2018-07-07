@@ -7,6 +7,7 @@ import AddBlock from "../AddArticle/AddArticle";
 import ArticlePage from "../ArticlePage/ArticlePage";
 import NoMatch from "../NoMatch";
 import EditArticle from "../EditArticle/EditArticle";
+import Header from "../Header/Header"
 
 export const pathHome = "/";
 export const pathLogin = "/login";
@@ -16,16 +17,24 @@ export const pathArticle = "/article/:slug";
 export const pathEditArticle = "/edit-article/:slug";
 
 const CoreLayout = props => {
+    const {location} = props;
+    console.log("props, corelayout", props);
     return (
-        <Switch>
-            <Route path={pathHome} exact component={Articles}/>
-            <Route path={pathLogin} component={SignInContainer}/>
-            <Route path={pathRegister} component={SignUpContainer}/>
-            <Route path={pathAddArticle} component={AddBlock}/>
-            <Route path={pathArticle} component={ArticlePage}/>
-            <Route path={pathEditArticle} component={EditArticle}/>
-            <Route component={NoMatch}/>
-        </Switch>
+        <React.Fragment>
+            <Header
+                location={location}
+                {...props}
+            />
+            <Switch>
+                <Route path={pathHome} exact component={Articles}/>
+                <Route path={pathLogin} component={SignInContainer}/>
+                <Route path={pathRegister} component={SignUpContainer}/>
+                <Route path={pathAddArticle} component={AddBlock}/>
+                <Route path={pathArticle} component={ArticlePage}/>
+                <Route path={pathEditArticle} component={EditArticle}/>
+                <Route component={NoMatch}/>
+            </Switch>
+        </React.Fragment>
     );
 };
 

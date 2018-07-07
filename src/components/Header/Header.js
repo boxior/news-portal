@@ -1,11 +1,12 @@
-import React from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 import {string} from "prop-types";
 import {Link} from "react-router-dom"
 import LogOut from "../LogOut/LogOut";
 import {Map} from "immutable"
-import {withRouter} from "react-router-dom"
 import {pathAddArticle, pathHome, pathLogin, pathRegister} from "../layouts/CoreLayputs";
+import {getToken} from "../../reducers/auth";
+import {connect} from "react-redux"
 
 const HeaderWrap = styled.div`
     display: flex;
@@ -24,36 +25,51 @@ const HeaderBody = styled.div`
     justify-content: space-between;
 `;
 
-const Header = (props) => {
-    const {title, account, getToken, token} = props;
+const mapStateToProps = state => ({
+    token: state.getIn(["auth", "token"]),
+    account: state.getIn(["auth", "account"])
+});
 
-    return (
-        <HeaderWrap>
-            <HeaderTitle>{title}</HeaderTitle>
-            <HeaderBody>
-                <Link to={pathHome}>Home page</Link>
+const mapDispatchToProps = dispatch => ({
+    getToken: () =>
+        dispatch(getToken()),
+});
 
-                {
-                    (token && token !== "undefined")
-                        ?
-                        <React.Fragment>
-                            <Link to={pathAddArticle}>Add Article</Link>
-                            <LogOut
-                                getToken={getToken}
-                                userName={Map(account).get("name")}
-                            />
-                        </React.Fragment>
-                        :
-                        props.location.pathname === pathLogin
+class Header extends Component {
+
+    render() {
+        const {account, getToken, token, location} = this.props;
+        const title = "News portal";
+
+        return (
+            <HeaderWrap>
+                <HeaderTitle>{title}</HeaderTitle>
+                <HeaderBody>
+                    <Link to={pathHome}>Home page</Link>
+
+                    {
+                        (token && token !== "undefined")
                             ?
-                            <Link to={pathRegister}>Register</Link>
+                            <React.Fragment>
+                                <Link to={pathAddArticle}>Add Article</Link>
+                                <LogOut
+                                    getToken={getToken}
+                                    userName={Map(account).get("name")}
+                                />
+                            </React.Fragment>
                             :
-                            <Link to={pathLogin}>Login</Link>
-                }
+                            location.pathname === pathLogin
+                                ?
+                                <Link to={pathRegister}>Register</Link>
+                                :
+                                <Link to={pathLogin}>Login</Link>
+                    }
 
-            </HeaderBody>
-        </HeaderWrap>
-    );
+                </HeaderBody>
+            </HeaderWrap>
+        );
+    }
+
 };
 
 Header.propTypes = {
@@ -64,4 +80,4 @@ Header.defaultProps = {
     title: "default title"
 };
 
-export default withRouter(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
