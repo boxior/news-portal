@@ -1,4 +1,4 @@
-import {GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP, SUCCESS} from "../store/constants";
+import {ERROR, GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP, START, SUCCESS} from "../store/constants";
 import {fromJS} from "immutable"
 import {getCookie} from "../cookies";
 
@@ -56,11 +56,23 @@ const actionHandlers = {
     [GET_TOKEN]: (state, action) => {
         return  state.set("token", action.token);
     },
+    [(SIGNIN + START)]: (state, action) => {
+        return  state.set("account", null);
+    },
+    [(SIGNUP + START)]: (state, action) => {
+        return  state.set("account", null);
+    },
     [(SIGNIN + SUCCESS)]: (state, action) => {
-        return  state.set("account", fromJS(action.payload.account));
+        return  state.set("account", fromJS(action.payload));
+    },
+    [(SIGNIN + ERROR)]: (state, action) => {
+        return  state.set("error", fromJS(action.payload));
     },
     [(GET_USER_DETAILS + SUCCESS)]: (state, action) => {
         return  state.set("account", fromJS(action.payload));
+    },
+    [(GET_USER_DETAILS + ERROR)]: (state, action) => {
+        return  state.set("error", fromJS(action.payload));
     }
 };
 

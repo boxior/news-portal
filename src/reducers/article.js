@@ -1,5 +1,5 @@
 import {fromJS} from "immutable";
-import {ADD_ARTICLE, GET_ARTICLE, START, SUCCESS, UPDATE_ARTICLE} from "../store/constants";
+import {ADD_ARTICLE, ERROR, GET_ARTICLE, START, SUCCESS, UPDATE_ARTICLE} from "../store/constants";
 import {getCookie} from "../cookies";
 
 export const getArticleApi = (slug) => ({
@@ -34,13 +34,18 @@ const initialState = fromJS({
 
 const actionHandlers = {
     [(ADD_ARTICLE + START)]: (state, action) => {
-        return  state.set("isGetArticle", true);
+        return state.set("isGetArticle", true);
     },
     [(ADD_ARTICLE + SUCCESS)]: (state, action) => {
         return  state.set("isGetArticle", false);
     },
     [(GET_ARTICLE + SUCCESS)]: (state, action) => {
         return  state.set("article", fromJS(action.payload));
+    },
+
+    //UPDATE_ARTICLE
+    [(UPDATE_ARTICLE + ERROR)]: (state, action) => {
+        return  state.set("error", fromJS(action.payload));
     }
 
 };

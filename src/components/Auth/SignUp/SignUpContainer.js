@@ -6,7 +6,7 @@ import {signUpApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
     token: state.auth.get("token"),
-
+    message: state.auth.getIn(["account", "message"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -16,14 +16,12 @@ const mapDispatchToProps = dispatch => ({
 
 class SignUpContainer extends Component {
 
-    static propTypes = {
-
-    };
+    static propTypes = {};
 
     componentWillReceiveProps(nextProps) {
         const {token, history} = this.props;
 
-        if(nextProps.token !== token && nextProps.token) {
+        if (nextProps.token !== token && nextProps.token) {
             history.push('/');
         }
     }
@@ -32,10 +30,10 @@ class SignUpContainer extends Component {
         const {signUpApi} = this.props;
 
         return (
-                <SignUpForm
-                    signUpApi={signUpApi}
-                />
-            )
+            <SignUpForm
+                signUpApi={signUpApi}
+            />
+        )
     }
 }
 

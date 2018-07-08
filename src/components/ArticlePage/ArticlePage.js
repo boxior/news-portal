@@ -15,7 +15,7 @@ const mapStateToProps = (state, props) => ({
     token: state.auth.get("token"),
     articles: state.articles.get("articles"),
     slug: props.match.params.slug,
-    article: state.article.getIn("article", "data", "0")
+    article: state.article.getIn(["article", "data", "0"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -42,6 +42,7 @@ class ArticlePage extends Component {
 
     render() {
         const {article, token, slug} = this.props;
+        console.log("Article pag", article);
 
         return Map.isMap(article) ? (
             <ArticlePageWrap>

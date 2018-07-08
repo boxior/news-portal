@@ -4,10 +4,8 @@ import {object, array, string, bool, func} from "prop-types";
 import Button from '@material-ui/core/Button';
 import validateForm from "../../../../form/validateForm";
 import {SIGNIN_FORM} from "../../../../store/constants";
-import {signInApi} from "../../../../reducers/auth";
 import {reduxForm, Field} from "redux-form";
 import FormField from "../../../../form/FormField";
-import {connect} from "react-redux"
 
 const SignInFormWrap = styled.div`
     
@@ -20,6 +18,11 @@ const FormS = styled.form`
     justify-content: center;
 `;
 
+const ErrorForAllForm = styled.strong`
+    color: red;
+    padding: 10px 0;
+`;
+
 class SignInForm extends Component {
 
     static propTypes = {
@@ -27,21 +30,21 @@ class SignInForm extends Component {
         submitting: bool.isRequired
     };
 
-    onFormSubmit = data =>
-        validateForm(SIGNIN_FORM, data)
-            .then(() => {
-                const { signInApi } = this.props;
+    onFormSubmit = data => {
+        const {signInApi, reset} = this.props;
 
+        return  validateForm(SIGNIN_FORM, data)
+            .then(() => {
                 return signInApi(data);
             })
             .then(res => {
-                const { reset } = this.props;
-
                 reset();
             });
+    }
+
 
     render() {
-        const { handleSubmit, submitting } = this.props;
+        const {handleSubmit, submitting, message} = this.props;
 
         return (
             <SignInFormWrap>
@@ -61,6 +64,7 @@ class SignInForm extends Component {
                         type={`password`}
                         component={FormField}
                     />
+                    <ErrorForAllForm>{message}</ErrorForAllForm>
                     <Button
                         type={`submit`}
                         variant="contained"
@@ -79,10 +83,6 @@ SignInForm.propTypes = {};
 
 SignInForm.defaultProps = {};
 
-export default connect(null, {
-    signInApi,
-})(
-    reduxForm({
-        form: SIGNIN_FORM
-    })(SignInForm)
-);
+export default reduxForm({
+    form: SIGNIN_FORM
+})(SignInForm);

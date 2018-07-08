@@ -5,9 +5,7 @@ import Button from '@material-ui/core/Button';
 import validateForm from "../../../../form/validateForm";
 import {SIGNUP_FORM} from "../../../../store/constants";
 import FormField from "../../../../form/FormField";
-import {reduxForm , Field} from "redux-form"
-import {connect} from "react-redux"
-import {signUpApi} from "../../../../reducers/auth";
+import {reduxForm, Field} from "redux-form"
 
 const SignOutFormWrap = styled.div`
     
@@ -20,6 +18,11 @@ const FormS = styled.form`
     justify-content: center;
 `;
 
+const ErrorForAllForm = styled.strong`
+    color: red;
+    padding: 10px 0;
+`;
+
 class SignUpForm extends Component {
 
     static propTypes = {
@@ -30,18 +33,18 @@ class SignUpForm extends Component {
     onFormSubmit = data =>
         validateForm(SIGNUP_FORM, data)
             .then(() => {
-                const { signUpApi } = this.props;
+                const {signUpApi} = this.props;
 
                 return signUpApi(data);
             })
             .then(res => {
-                const { reset } = this.props;
+                const {reset} = this.props;
 
                 reset();
             });
 
     render() {
-        const { handleSubmit, submitting } = this.props;
+        const {handleSubmit, submitting, message} = this.props;
 
         return (
             <SignOutFormWrap>
@@ -53,7 +56,6 @@ class SignUpForm extends Component {
                         name={`email`}
                         label={`Email`}
                         margin={`normal`}
-                        type={`email`}
                         component={FormField}
                     />
                     <Field
@@ -76,6 +78,7 @@ class SignUpForm extends Component {
                         type={`password`}
                         component={FormField}
                     />
+                    <ErrorForAllForm>{message}</ErrorForAllForm>
                     <Button
                         type={`submit`}
                         variant="contained"
@@ -89,10 +92,6 @@ class SignUpForm extends Component {
     };
 };
 
-export default connect(null, {
-    signUpApi
-})(
-    reduxForm({
-        form: SIGNUP_FORM
-    })(SignUpForm)
-);
+export default reduxForm({
+    form: SIGNUP_FORM
+})(SignUpForm);

@@ -33,7 +33,6 @@ const fetchMiddleware = store => next => action => {
                 if (res.headers.get('Content-Type').search("application/json") !== -1) {
                     return res.json();
                 }
-                console.log("res", res);
                 return Promise.resolve();
             })
             .then(res =>

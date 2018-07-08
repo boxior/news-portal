@@ -5,14 +5,14 @@ import {getToken, getUserDetailsApi} from "../reducers/auth";
 import CoreLayout from "../components/layouts/CoreLayouts";
 import {Route} from "react-router-dom"
 import {BrowserRouter} from "react-router-dom"
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 const AppWrap = styled.div`
   
 `;
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
     getToken: () =>
@@ -32,16 +32,18 @@ class App extends Component {
 
     render() {
         return (
-            <BrowserRouter>
-                <AppWrap>
-                    <React.Fragment>
-                        <Route
-                            path={`/`}
-                            component={CoreLayout}
-                        />
-                    </React.Fragment>
-                </AppWrap>
-            </BrowserRouter>
+            <MuiThemeProvider>
+                <BrowserRouter>
+                    <AppWrap>
+                        <React.Fragment>
+                            <Route
+                                path={`/`}
+                                component={CoreLayout}
+                            />
+                        </React.Fragment>
+                    </AppWrap>
+                </BrowserRouter>
+            </MuiThemeProvider>
         )
     }
 }

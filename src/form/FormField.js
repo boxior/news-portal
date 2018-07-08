@@ -11,14 +11,16 @@ const FormField = (props) => {
         type,
         label,
         placeholder,
-        meta: { touched, error, submitting }
+        meta: { touched, error, submitting },
+        fullWidth
     } = props;
-    console.log("props formField", props);
 
     return (
         <FormControl
             error={error ? true : false}
-            aria-describedby="name-error-text">
+            aria-describedby="name-error-text"
+            fullWidth={fullWidth}
+        >
             <InputLabel>{label}</InputLabel>
             <Input
                 hinttext={placeholder}

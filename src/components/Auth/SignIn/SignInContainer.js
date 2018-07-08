@@ -6,6 +6,7 @@ import {signInApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
     token: state.auth.get("token"),
+    message: state.auth.getIn(["account", "message"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -36,12 +37,12 @@ class SignInContainer extends Component {
     }
 
     render() {
-        const {signInApi, getArticlesApi} = this.props;
+        const {signInApi, message} = this.props;
 
         return (
                 <SignInForm
-                    getArticlesApi={getArticlesApi}
                     signInApi={signInApi}
+                    message={message}
                 />
             )
     }

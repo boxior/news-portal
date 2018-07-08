@@ -1,61 +1,60 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import {object, array, string, bool, func} from "prop-types";
-import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
+import validateForm from "../../../../../../form/validateForm";
+import {ADD_COMMENT, SIGNIN_FORM} from "../../../../../../store/constants";
+import FormField from "../../../../../../form/FormField";
+import {reduxForm, Field} from "redux-form"
 
 const AddCommentWrap = styled.div`
     display: flex;
     align-items: center;
 `;
 
+const ErrorForAllForm = styled.strong`
+    color: red;
+    padding: 10px 0;
+`;
+
 class AddComment extends Component {
 
-    state = {
-        comment: ""
+    static propTypes = {
+        handleSubmit: func.isRequired,
+        submitting: bool.isRequired
     };
 
-    onChange = e => {
-        const value = e.currentTarget.value;
+    onFormSubmit = data => {
+        const {addCommentApi, reset, article_id} = this.props;
 
-        this.setState({comment: value});
+        return  validateForm(ADD_COMMENT, data)
+            .then(() => {
+                return addCommentApi({...data, article_id});
+            })
+            .then(res => {
+                reset();
+            });
     };
-
-    onSubmit = e => {
-        const {addCommentApi, article_id} = this.props;
-        const {comment} = this.state;
-        e.preventDefault();
-
-        const body = {
-            article_id: article_id, // string, required
-            comment: comment // string, required
-        };
-
-        addCommentApi(body);
-        this.setState({comment: ""});
-    };
-
 
     render() {
-        const {comment} = this.state;
-        const {onChange, onSubmit} = this;
+        const {handleSubmit, submitting, message} = this.props;
 
         return (
             <AddCommentWrap>
                 <form action=""
-                    onSubmit={onSubmit}
+                    onSubmit={handleSubmit(this.onFormSubmit)}
                 >
-                    <TextField
+                    <Field
                         name={`comment`}
-                        value={comment}
-                        onChange={onChange}
+                        component={FormField}
                     />
+                    <ErrorForAllForm>{message}</ErrorForAllForm>
                     <Button
                         type={`submit`}
                         variant={`contained`}
                         style={{marginLeft: "15px"}}
                     >
-                        Add comment
+                        {submitting ? "Sending..." : "Add Article"}
                     </Button>
                 </form>
 
@@ -70,4 +69,6 @@ AddComment.propTypes = {};
 
 AddComment.defaultProps = {};
 
-export default AddComment;
+export default reduxForm({
+    form: ADD_COMMENT
+})(AddComment);
