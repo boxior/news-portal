@@ -5,7 +5,7 @@ import SignUpForm from "./components/SignUpForm";
 import {signUpApi} from "../../../reducers/auth";
 
 const mapStateToProps = state => ({
-    token: state.getIn(["auth", "token"]),
+    token: state.auth.get("token"),
 
 });
 

@@ -78,12 +78,6 @@ const initialState = fromJS({
 });
 
 const actionHandlers = {
-    // [REMOVE_COMMENTS]: (state, action) => {
-    //     return state.set("articles", fromJS(action.payload));
-    // },
-    // [ADD_COMMENT + SUCCESS]: (state, action) => {
-    //     return  state.set("articles", fromJS(action.payload));
-    // },
     [(GET_ARTICLES + SUCCESS)]: (state, action) => {
         return state.set("articles", fromJS(action.payload.items));
     }

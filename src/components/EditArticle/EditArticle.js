@@ -16,8 +16,8 @@ const EditArticleWrap = styled.div`
 `;
 
 const mapStateToProps = (state, props) => ({
-    article: state.getIn(["article", "article", "data", "0"]),
-    token: state.getIn(["auth", "token"]),
+    article: state.article.getIn(["article", "data", "0"]),
+    token: state.auth.get("token"),
     slug: props.match.params.slug
 });
 

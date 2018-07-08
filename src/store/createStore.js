@@ -1,10 +1,9 @@
 import {createStore, applyMiddleware, compose} from "redux"
 import rootReducer from "./reducer"
-import {fromJS} from "immutable";
 import index from "../middlewares/index";
 import thunk from "redux-thunk";
 
-const initialState = fromJS({});
+const initialState = {};
 const enhancers = [];
 const middleware = [thunk, index /*, apiMiddleware */];
 

@@ -1,4 +1,4 @@
-import { SubmissionError } from "redux-form/immutable";
+import { SubmissionError } from "redux-form";
 import formValidationRules from "./formValidationRules";
 
 const validate = validationRules => values => {

@@ -26,8 +26,9 @@ const HeaderBody = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    token: state.getIn(["auth", "token"]),
-    account: state.getIn(["auth", "account"])
+    token: state.auth.get("token"),
+    account: state.auth.get("account")
+    // account: state.getIn(["auth", "account"])
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,8 +1,13 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import {object, array, string, bool, func} from "prop-types";
-import TextField from "@material-ui/core/TextField"
 import Button from '@material-ui/core/Button';
+import validateForm from "../../../../form/validateForm";
+import {SIGNUP_FORM} from "../../../../store/constants";
+import FormField from "../../../../form/FormField";
+import {reduxForm , Field} from "redux-form"
+import {connect} from "react-redux"
+import {signUpApi} from "../../../../reducers/auth";
 
 const SignOutFormWrap = styled.div`
     
@@ -17,79 +22,66 @@ const FormS = styled.form`
 
 class SignUpForm extends Component {
 
-    state = {
-        email: '',
-        name: '', // min 2 symbols
-        password: '', // min 6 symbols
-        password_confirm: ''
+    static propTypes = {
+        handleSubmit: func.isRequired,
+        submitting: bool.isRequired
     };
 
-    onSubmit = e => {
-        const {signUpApi} = this.props;
+    onFormSubmit = data =>
+        validateForm(SIGNUP_FORM, data)
+            .then(() => {
+                const { signUpApi } = this.props;
 
-        e.preventDefault();
+                return signUpApi(data);
+            })
+            .then(res => {
+                const { reset } = this.props;
 
-        signUpApi(this.state);
-    };
-
-    onChange = e => {
-        const value = e.currentTarget.value;
-        const property = e.currentTarget.name;
-
-        this.setState({[property]: value});
-    };
-
+                reset();
+            });
 
     render() {
-        const {email, name, pass, passConfirm} = this.props;
-        const {onSubmit, onChange} = this;
+        const { handleSubmit, submitting } = this.props;
 
         return (
             <SignOutFormWrap>
                 <FormS
                     action=""
-                    onSubmit={onSubmit}
+                    onSubmit={handleSubmit(this.onFormSubmit)}
                 >
-                    <TextField
+                    <Field
                         name={`email`}
                         label={`Email`}
-                        value={email}
-                        onChange={onChange}
                         margin={`normal`}
                         type={`email`}
-                        required
+                        component={FormField}
                     />
-                    <TextField
+                    <Field
                         name={`name`}
                         label={`Name`}
-                        value={name}
-                        onChange={onChange}
                         margin={`normal`}
-                        required
+                        component={FormField}
                     />
-                    <TextField
+                    <Field
                         name={`password`}
                         label={`Password`}
-                        value={pass}
-                        onChange={onChange}
                         margin={`normal`}
                         type={`password`}
-                        required
+                        component={FormField}
                     />
-                    <TextField
+                    <Field
                         name={`password_confirm`}
                         label={`Password Confirm`}
-                        value={passConfirm}
-                        onChange={onChange}
                         margin={`normal`}
                         type={`password`}
-                        required
+                        component={FormField}
                     />
                     <Button
                         type={`submit`}
                         variant="contained"
+                        disabled={submitting}
                     >
-                        Sign Up
+                        {submitting ? "Sending..." : "Sign Up"}
                     </Button>
                 </FormS>
             </SignOutFormWrap>
@@ -97,4 +89,10 @@ class SignUpForm extends Component {
     };
 };
 
-export default SignUpForm;
+export default connect(null, {
+    signUpApi
+})(
+    reduxForm({
+        form: SIGNUP_FORM
+    })(SignUpForm)
+);

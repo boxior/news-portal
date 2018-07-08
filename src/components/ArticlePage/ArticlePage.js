@@ -12,10 +12,10 @@ const ArticlePageWrap = styled.div`
 `;
 
 const mapStateToProps = (state, props) => ({
-    token: state.getIn(["auth", "token"]),
-    articles: state.getIn(["articles", "articles"]),
+    token: state.auth.get("token"),
+    articles: state.articles.get("articles"),
     slug: props.match.params.slug,
-    article: state.getIn(["article", "article", "data", "0"])
+    article: state.article.getIn("article", "data", "0")
 });
 
 const mapDispatchToProps = dispatch => ({

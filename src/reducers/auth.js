@@ -1,5 +1,5 @@
 import {GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP, SUCCESS} from "../store/constants";
-import {fromJS, Map} from "immutable"
+import {fromJS} from "immutable"
 import {getCookie} from "../cookies";
 
 //Action creators

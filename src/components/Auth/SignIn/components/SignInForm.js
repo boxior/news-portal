@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import validateForm from "../../../../form/validateForm";
 import {SIGNIN_FORM} from "../../../../store/constants";
 import {signInApi} from "../../../../reducers/auth";
-import {reduxForm, Field} from "redux-form/immutable";
+import {reduxForm, Field} from "redux-form";
 import FormField from "../../../../form/FormField";
 import {connect} from "react-redux"
 
@@ -52,7 +52,6 @@ class SignInForm extends Component {
                         name={`email`}
                         label={`Email`}
                         margin={`normal`}
-                        type={`email`}
                         component={FormField}
                     />
                     <Field
@@ -81,7 +80,7 @@ SignInForm.propTypes = {};
 SignInForm.defaultProps = {};
 
 export default connect(null, {
-    signInApi
+    signInApi,
 })(
     reduxForm({
         form: SIGNIN_FORM

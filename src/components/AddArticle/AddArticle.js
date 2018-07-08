@@ -14,9 +14,9 @@ const AddArticleWrap = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    articles: state.getIn(["articles", "articles"]),
-    token: state.getIn(["auth", "token"]),
-    isGetArticle: state.getIn(["article", "isGetArticle"])
+    articles: state.articles.get("articles"),
+    token: state.auth.get("token"),
+    isGetArticle: state.article.get("isGetArticle")
 });
 
 const mapDispatchToProps = dispatch => ({

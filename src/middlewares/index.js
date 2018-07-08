@@ -11,6 +11,7 @@ import {
 import {getToken} from "../reducers/auth";
 import {setCookie} from "../cookies";
 import {getArticlesApi} from "../reducers/articles";
+import {isObjectWithOwnProperty} from "../good_functions";
 
 // to make middleware works, you have to app some special action property, which
 // will be identify that this action is a client of fetching middleware. In this
@@ -32,6 +33,7 @@ const fetchMiddleware = store => next => action => {
                 if (res.headers.get('Content-Type').search("application/json") !== -1) {
                     return res.json();
                 }
+                console.log("res", res);
                 return Promise.resolve();
             })
             .then(res =>
