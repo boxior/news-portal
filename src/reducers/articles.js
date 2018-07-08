@@ -3,11 +3,10 @@ import {
     ADD_ARTICLE,
     ADD_COMMENT,
     GET_ARTICLES,
-    REMOVE_ARTICLE, REMOVE_COMMENT
+    REMOVE_ARTICLE, REMOVE_COMMENT, SUCCESS
 } from "../store/constants";
 import {fromJS} from "immutable"
 import {getCookie} from "../cookies";
-import {SUCCESS} from "../middlewares";
 
 //Action creators
 

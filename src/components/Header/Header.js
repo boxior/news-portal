@@ -4,7 +4,7 @@ import {string} from "prop-types";
 import {Link} from "react-router-dom"
 import LogOut from "../LogOut/LogOut";
 import {Map} from "immutable"
-import {pathAddArticle, pathHome, pathLogin, pathRegister} from "../layouts/CoreLayputs";
+import {pathAddArticle, pathHome, pathLogin, pathRegister} from "../layouts/CoreLayouts";
 import {getToken} from "../../reducers/auth";
 import {connect} from "react-redux"
 

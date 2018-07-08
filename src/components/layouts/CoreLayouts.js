@@ -18,15 +18,14 @@ export const pathEditArticle = "/edit-article/:slug";
 
 const CoreLayout = props => {
     const {location} = props;
-    console.log("props, corelayout", props);
+
     return (
         <React.Fragment>
             <Header
                 location={location}
-                {...props}
             />
             <Switch>
-                <Route path={pathHome} exact component={Articles}/>
+                <Route exact path={pathHome} component={Articles}/>
                 <Route path={pathLogin} component={SignInContainer}/>
                 <Route path={pathRegister} component={SignUpContainer}/>
                 <Route path={pathAddArticle} component={AddBlock}/>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux"
 import styled from "styled-components"
 import {getToken, getUserDetailsApi} from "../reducers/auth";
-import CoreLayout from "../components/layouts/CoreLayputs";
+import CoreLayout from "../components/layouts/CoreLayouts";
 import {Route} from "react-router-dom"
 import {BrowserRouter} from "react-router-dom"
 

@@ -1,11 +1,17 @@
-import {ADD_ARTICLE, ADD_COMMENT, REMOVE_ARTICLE, REMOVE_COMMENT, SIGNIN, SIGNUP} from "../store/constants";
+import {
+    ADD_ARTICLE,
+    ADD_COMMENT,
+    ERROR,
+    REMOVE_ARTICLE,
+    REMOVE_COMMENT,
+    SIGNIN,
+    SIGNUP, START,
+    SUCCESS
+} from "../store/constants";
 import {getToken} from "../reducers/auth";
 import {setCookie} from "../cookies";
 import {getArticlesApi} from "../reducers/articles";
 
-export const SUCCESS = '_SUCCESS';
-export const ERROR = '_ERROR';
-export const START = '_START';
 // to make middleware works, you have to app some special action property, which
 // will be identify that this action is a client of fetching middleware. In this
 // example we use `apiUrl`, but you can use another.

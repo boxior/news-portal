@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import {object, array, string, bool, func} from "prop-types";
-import TextField from "@material-ui/core/TextField"
 import Button from '@material-ui/core/Button';
-import {setCookie} from "../../../../cookies";
+import validateForm from "../../../../form/validateForm";
+import {SIGNIN_FORM} from "../../../../store/constants";
+import {signInApi} from "../../../../reducers/auth";
+import {reduxForm, Field} from "redux-form/immutable";
+import FormField from "../../../../form/FormField";
+import {connect} from "react-redux"
 
 const SignInFormWrap = styled.div`
     
@@ -18,57 +22,52 @@ const FormS = styled.form`
 
 class SignInForm extends Component {
 
-    state = {
-        email: '',
-        password: ''  // min 6 symbols
+    static propTypes = {
+        handleSubmit: func.isRequired,
+        submitting: bool.isRequired
     };
 
-    onSubmit = e => {
-        const {signInApi} = this.props;
+    onFormSubmit = data =>
+        validateForm(SIGNIN_FORM, data)
+            .then(() => {
+                const { signInApi } = this.props;
 
-        e.preventDefault();
+                return signInApi(data);
+            })
+            .then(res => {
+                const { reset } = this.props;
 
-        signInApi(this.state);
-    };
-
-    onChange = e => {
-        const value = e.currentTarget.value;
-        const property = e.currentTarget.name;
-
-        this.setState({[property]: value});
-    };
+                reset();
+            });
 
     render() {
-        const {} = this.props;
-        const {onSubmit, onChange} = this;
+        const { handleSubmit, submitting } = this.props;
 
         return (
             <SignInFormWrap>
                 <FormS
-                    action=""
-                    onSubmit={onSubmit}
+                    onSubmit={handleSubmit(this.onFormSubmit)}
                 >
-                    <TextField
+                    <Field
                         name={`email`}
                         label={`Email`}
                         margin={`normal`}
                         type={`email`}
-                        onChange={onChange}
-                        required
+                        component={FormField}
                     />
-                    <TextField
+                    <Field
                         name={`password`}
                         label={`Password`}
                         margin={`normal`}
                         type={`password`}
-                        onChange={onChange}
-                        required
+                        component={FormField}
                     />
                     <Button
                         type={`submit`}
                         variant="contained"
+                        disabled={submitting}
                     >
-                        Sign In
+                        {submitting ? "Sending..." : "Sign In"}
                     </Button>
                 </FormS>
             </SignInFormWrap>
@@ -81,4 +80,10 @@ SignInForm.propTypes = {};
 
 SignInForm.defaultProps = {};
 
-export default SignInForm;
+export default connect(null, {
+    signInApi
+})(
+    reduxForm({
+        form: SIGNIN_FORM
+    })(SignInForm)
+);

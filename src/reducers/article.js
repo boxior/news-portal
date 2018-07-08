@@ -1,6 +1,5 @@
 import {fromJS} from "immutable";
-import {ADD_ARTICLE, GET_ARTICLE, UPDATE_ARTICLE} from "../store/constants";
-import {START, SUCCESS} from "../middlewares";
+import {ADD_ARTICLE, GET_ARTICLE, START, SUCCESS, UPDATE_ARTICLE} from "../store/constants";
 import {getCookie} from "../cookies";
 
 export const getArticleApi = (slug) => ({

@@ -4,7 +4,7 @@ import {object, array, string, bool, func} from "prop-types";
 import {connect} from "react-redux"
 import {getArticleApi} from "../../reducers/article";
 import {Map} from "immutable"
-import {pathEditArticle} from "../layouts/CoreLayputs";
+import {pathEditArticle} from "../layouts/CoreLayouts";
 import {Link} from "react-router-dom"
 
 const ArticlePageWrap = styled.div`

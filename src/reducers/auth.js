@@ -1,4 +1,4 @@
-import {GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP} from "../store/constants";
+import {GET_TOKEN, GET_USER_DETAILS, SIGNIN, SIGNUP, SUCCESS} from "../store/constants";
 import {fromJS, Map} from "immutable"
 import {getCookie} from "../cookies";
 
@@ -49,17 +49,17 @@ export const signUpApi = body => ({
 
 const initialState = fromJS({
     account: null,
-    token: ""
+    token: getCookie("token")
 });
 
 const actionHandlers = {
     [GET_TOKEN]: (state, action) => {
         return  state.set("token", action.token);
     },
-    ["SIGNIN_SUCCESS"]: (state, action) => {
+    [(SIGNIN + SUCCESS)]: (state, action) => {
         return  state.set("account", fromJS(action.payload.account));
     },
-    ["GET_USER_DETAILS_SUCCESS"]: (state, action) => {
+    [(GET_USER_DETAILS + SUCCESS)]: (state, action) => {
         return  state.set("account", fromJS(action.payload));
     }
 };

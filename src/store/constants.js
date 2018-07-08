@@ -11,3 +11,11 @@ export const GET_ARTICLE = "GET_ARTICLE";
 export const UPDATE_ARTICLE = "UPDATE_ARTICLE";
 export const SIGNIN = "SIGNIN";
 export const SIGNUP = "SIGNUP";
+export const SIGNIN_FORM = "SIGNIN_FORM";
+export const SIGNUP_FORM = "SIGNUP_FORM";
+
+export const FORM_SEND = "REGISTER_FORM";
+
+export const SUCCESS = '_SUCCESS';
+export const ERROR = '_ERROR';
+export const START = '_START';
