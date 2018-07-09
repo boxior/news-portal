@@ -14,20 +14,26 @@ const FormDatePicker = (props) => {
         type,
         label,
         placeholder,
-        meta: { touched, error, submitting },
+        meta: {touched, error, submitting},
         fullWidth
     } = props;
 
+    const onChange = (n, dateObj) => {
+        input.onChange(new Date(moment(dateObj).format("LLLL")));
+    };
+
     return (
         <DatePicker
-            autoOk={false}
-            floatingLabelText="Min Date"
+            autoOk={true}
+            floatingLabelText={label}
             defaultDate={new Date()}
             disableYearSelection={false}
             type={type}
             readOnly={submitting}
             {...input}
-            value={new Date(input.value)}
+            onChange={onChange}
+            formatDate={() => moment(input.value).format("LLLL")}
+            value={new Date(moment(input.value).format("LLLL"))}
         />
     );
 };

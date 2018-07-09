@@ -22,6 +22,7 @@ const FormCheckbox = (props) => {
                         type={type}
                         readOnly={submitting}
                         {...input}
+                        value={input.value.toString()}
                     />
                 }
                 label={label}
