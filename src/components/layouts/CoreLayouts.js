@@ -30,43 +30,59 @@ const Loading = props => {
 };
 
 const ArticlesLoadable = Loadable({
-    loader: () => import("../Articles/Articles"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "ArticlesChunk"*/ "../Articles/Articles"),
+    loading: Loading,
+    modules: ['ArticlesChunk'],
+    // webpack: () => [require.resolveWeak('../Articles/Articles')],
 });
 
 const SignInContainerLoadable = Loadable({
-    loader: () => import("../Auth/SignIn/SignInContainer"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "SignInContainerChunk"*/ "../Auth/SignIn/SignInContainer"),
+    loading: Loading,
+    modules: ['SignInContainerChunk'],
+    // webpack: () => [require.resolveWeak('../Auth/SignIn/SignInContainer')],
 });
 
 const SignUpContainerLoadable = Loadable({
-    loader: () => import("../Auth/SignUp/SignUpContainer"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "SignUpContainerChunk"*/ "../Auth/SignUp/SignUpContainer"),
+    loading: Loading,
+    modules: ['SignUpContainerChunk'],
+    // webpack: () => [require.resolveWeak('../Auth/SignUp/SignUpContainer')],
 });
 
 const AddArticleLoadable = Loadable({
-    loader: () => import("../AddArticle/AddArticle"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "AddArticleChunk"*/ "../AddArticle/AddArticle"),
+    loading: Loading,
+    modules: ['AddArticleChunk'],
+    // webpack: () => [require.resolveWeak('../AddArticle/AddArticle')],
 });
 
 const ArticlePageLoadable = Loadable({
-    loader: () => import("../ArticlePage/ArticlePage"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "ArticlePageChunk"*/ "../ArticlePage/ArticlePage"),
+    loading: Loading,
+    modules: ['ArticlePageChunk'],
+    // webpack: () => [require.resolveWeak('../ArticlePage/ArticlePage')],
 });
 
 const NoMatchLoadable = Loadable({
-    loader: () => import("../NoMatch"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "NoMatchChunk"*/ "../NoMatch"),
+    loading: Loading,
+    modules: ['NoMatchChunk'],
+    // webpack: () => [require.resolveWeak('../NoMatch')],
 });
 
 const EditArticleLoadable = Loadable({
-    loader: () => import("../EditArticle/EditArticle"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "EditArticleChunk"*/ "../EditArticle/EditArticle"),
+    loading: Loading,
+    modules: ['EditArticleChunk'],
+    // webpack: () => [require.resolveWeak('../EditArticle/EditArticle')],
 });
 
 const HeaderLoadable = Loadable({
-    loader: () => import("../Header/Header"),
-    loading: Loading
+    loader: () => import(/* webpackChunkName: "HeaderChunk"*/ "../Header/Header"),
+    loading: Loading,
+    modules: ['HeaderChunk'],
+    // webpack: () => [require.resolveWeak('../Header/Header')],
 });
 
 const CoreLayout = props => {
